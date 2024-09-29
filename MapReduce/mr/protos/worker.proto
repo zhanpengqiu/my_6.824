@@ -1,0 +1,71 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+option objc_class_prefix = "HLW";
+
+package RpcModule;
+
+// The greeting service definition.
+service Worker {
+  // Sends a greeting
+  rpc CheckAlive (CheckAliveRequest) returns (CheckAliveReply) {}
+  rpc AssignTask (stream AssignTaskRequest) returns (AssignTaskReply) {}
+  rpc GetFileContentRpc (GetFileContentRequest) returns (GetFileContentReply){}
+  rpc QuitSign(QuitRequest)returns(QuitReply){}
+}
+
+// The request message containing the user's name.
+message CheckAliveRequest {
+  bool status=1;
+}
+
+// The response message containing the greetings
+message CheckAliveReply {
+  bool status=1;
+}
+
+message QuitRequest{
+  bool quitsign=1;
+}
+
+message QuitReply{
+  bool success=1;
+}
+
+// The request message containing the tasks
+message AssignTaskRequest {
+  string ip=1;
+  int32 port=2;
+  string task=3;
+  int32 task_id=4;
+  int32 task_type=5;
+}
+
+// The response message containing the assigned tasks
+message AssignTaskReply {
+  bool success=1;
+}
+
+// The request message containing the file content
+message GetFileContentRequest {
+  string file_path=1;
+}
+
+// The response message containing the file content
+message GetFileContentReply {
+  string content=1;
+  bool success=2;
+}

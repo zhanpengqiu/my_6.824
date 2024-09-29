@@ -1,0 +1,15 @@
+/home/qzp/lab/study/src/MapReduce/build/CMakeFiles/mrcoordinator.dir
+/home/qzp/lab/study/src/MapReduce/build/CMakeFiles/mrworker.dir
+/home/qzp/lab/study/src/MapReduce/build/CMakeFiles/edit_cache.dir
+/home/qzp/lab/study/src/MapReduce/build/CMakeFiles/rebuild_cache.dir
+/home/qzp/lab/study/src/MapReduce/build/CMakeFiles/list_install_components.dir
+/home/qzp/lab/study/src/MapReduce/build/CMakeFiles/install.dir
+/home/qzp/lab/study/src/MapReduce/build/CMakeFiles/install/local.dir
+/home/qzp/lab/study/src/MapReduce/build/CMakeFiles/install/strip.dir
+/home/qzp/lab/study/src/MapReduce/build/mr/CMakeFiles/mrmodule.dir
+/home/qzp/lab/study/src/MapReduce/build/mr/CMakeFiles/edit_cache.dir
+/home/qzp/lab/study/src/MapReduce/build/mr/CMakeFiles/rebuild_cache.dir
+/home/qzp/lab/study/src/MapReduce/build/mr/CMakeFiles/list_install_components.dir
+/home/qzp/lab/study/src/MapReduce/build/mr/CMakeFiles/install.dir
+/home/qzp/lab/study/src/MapReduce/build/mr/CMakeFiles/install/local.dir
+/home/qzp/lab/study/src/MapReduce/build/mr/CMakeFiles/install/strip.dir

@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../lib/libmrmodule.a CMakeFiles/mrmodule.dir/worker.pb.cc.o CMakeFiles/mrmodule.dir/worker.grpc.pb.cc.o CMakeFiles/mrmodule.dir/coordinator.pb.cc.o CMakeFiles/mrmodule.dir/coordinator.grpc.pb.cc.o CMakeFiles/mrmodule.dir/coordinator.cpp.o CMakeFiles/mrmodule.dir/worker.cpp.o
+/usr/bin/ranlib ../lib/libmrmodule.a
