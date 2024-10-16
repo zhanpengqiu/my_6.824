@@ -1,3 +1,4 @@
 .vscode
 MapReduce/build/
 raft/build/
+kvraft/build/

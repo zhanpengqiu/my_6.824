@@ -44,7 +44,7 @@ private:
         // RaftCtl->RandomSleep();   
         int tmp=0+rand()%10;
         if(tmp>4)return Status::CANCELLED;    
-
+         
         int term=request->term();
         int candidateId=request->candidateid();
         int lastLogTerm=request->lastlogterm();
@@ -58,18 +58,15 @@ private:
                 RaftCtl->SetTerm(term);                 //跟随他人的任期
                 RaftCtl->setRafterType(FOLLOWER); 
             }
-            // cout<<lastLogIndex<<" "<<RaftCtl->GetLastIndex()<<" "<<lastLogTerm<<" "<<RaftCtl->GetLastLogTerm()<<endl;
             //投票条件
             if(RaftCtl->GetVoteFor()==-1||RaftCtl->GetVoteFor()==candidateId){
                 //日志一致性，检查传来的日志是不是最新的,比自己新，就给出投票
                 if(lastLogIndex>=RaftCtl->GetLastIndex()&&lastLogTerm>=RaftCtl->GetLastLogTerm()){
-                    // cout<<"Node "<<RaftCtl->GetMyId()<<"vote for "<<candidateId<<endl;
                     reply->set_term(RaftCtl->GetTerm());
                     reply->set_votegranted(true);               //同意投票
                     RaftCtl->setRafterType(FOLLOWER);           //成为跟随者，用于LEADER转变成FOLLOWER
                     RaftCtl->SetFollowerFlag(true);
                     RaftCtl->SetVoteFor(candidateId);
-                    cout<<"Term "<<term<<" node "<<RaftCtl->GetMyId()<<" been voted for "<<RaftCtl->GetVoteFor()<<" candidateid "<<candidateId<<endl;
                     return Status::OK;
                 }
             }
@@ -103,14 +100,13 @@ private:
             LogEntry entry(request->entries(i).cmd(), request->entries(i).term(), request->entries(i).index());
             entries.push_back(entry);
         }
-        cout<<"Node "<<RaftCtl->GetMyId()<<" Term "<<RaftCtl->GetTerm()<<" commitindex "<<RaftCtl->GetCommitIndex()<<" LastIndex"<<RaftCtl->GetLastIndex()<<" LastTerm "<<RaftCtl->GetLastLogTerm()<<" received: "<<"Term "<<term<<" LeaderId "<<leaderId<<" PrevLogIndex "<<prevLogIndex<<" PrevLogTerm "<<prevLogTerm<<" CommitIndex "<<commitIndex<<" Entries size "<<entries.size()<<endl;
 
         int my_lastindex=RaftCtl->GetLastIndex();
         int my_lastterm=RaftCtl->GetLastLogTerm();
 
         //发现如果自己的日志明显低于主机的快照，那么告知主机，我需要你发送快照文件，让我更新我自己
         reply->set_installsnapshot(false);
-        if(prevLogIndex-my_lastindex>100){
+        if(prevLogIndex-my_lastindex>20){
             reply->set_installsnapshot(true);
         }
         //处理消息
@@ -146,7 +142,6 @@ private:
             }
             else{//如果日志为空，那么要么是commit一个日志index，要么就是确认领导权，在这一部分只要check commitlog就行。
             //还有一种情况，就是传入的日志虽然为空，但是还是有可能会进行他哦干部日志的工作
-                cout<<"prevLogIndex "<<prevLogIndex<<" my_lastindex "<<my_lastindex<<" prevLogTerm "<<prevLogTerm<<" RaftCtl->GetIndexTerm(my_last_term) "<<RaftCtl->GetIndexTerm(my_lastindex);
                 if(prevLogIndex>my_lastindex||prevLogTerm>RaftCtl->GetIndexTerm(prevLogIndex)){//进行日志匹配工作
                     RaftCtl->SetFollowerFlag(true);
 
@@ -221,7 +216,6 @@ private:
             RaftCtl->SetCommitIndex(last_include_index);
             RaftCtl->SetLastAppliedLogIndex(request->statemachine(0).index());
             RaftCtl->UnlockLogReciveFlag();
-            cout<<endl<<"InstallsnapShot last_include_index: "<<last_include_index<<" CommitIndex: "<<RaftCtl->GetCommitIndex()<<" log_size "<<entries.size()<<endl;
         }
         reply->set_term(RaftCtl->GetTerm());
         return Status::OK;
@@ -285,8 +279,6 @@ public:
         args.set_prevlogterm(RaftCtl->GetPreLogTerm(id));
         args.set_commitindex(RaftCtl->GetCommitIndex());
 
-        cout<<"asdasdasdasdqwexcgjihdb"<<RaftCtl->state_machine->GetIndex()<<" prelogindex "<<RaftCtl->GetPreLogIndex(id)<<" PreLogTerm: "<<RaftCtl->GetPreLogTerm(id)<<endl;
-
         auto entries=RaftCtl->GetEntries(RaftCtl->GetPreLogIndex(id)+1);
         for(auto iter=entries.begin(); iter!=entries.end(); iter++){
             RpcModule::Entry* entry=args.add_entries();
@@ -312,7 +304,6 @@ public:
                 if(reply.success()){
                     RaftCtl->SetPreLogIndex(id,entries_size);       //设置nextindex的
                     RaftCtl->SetMatchIndex(id,RaftCtl->GetPreLogIndex(id));        //设置matchindex的
-                    cout<<" appendiex success : prelog&id"<<RaftCtl->GetPreLogIndex(id)<<" "<<id<<" matchindex "<<RaftCtl->GetMatchIndex(id)<<endl;
                 }else{
                     if(!reply.installsnapshot()) 
                         RaftCtl->SetPreLogIndex(id,-1);         //设置nextindex的

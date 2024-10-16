@@ -1,0 +1,3 @@
+322
+64
+Node 1 Term: 64 generated a cmd:322

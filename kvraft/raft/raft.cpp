@@ -14,7 +14,7 @@
 //   should send an ApplyMsg to the service (or tester)
 //   in the same server.
 //
-#include "./include/raft.h"
+#include "raft.h"
 #include "rpc.h"
 #include "timer.h"
 
@@ -96,7 +96,6 @@ void Raft::Run(){
     thread thread_ticker(&Raft::ticker,this);
     thread thread_client(&Raft::ClientServer,this);                         //启动服务器进程
     thread thread_randomaddlog(&Raft::RandomAddLog,this);
-    thread thread_printlog(&Raft::PrintLog,this);
     thread thread_persistlog(&Raft::LogPersist ,this);
     thread thread_applylog(&Raft::ApplyLogLoop, this);
     thread thread_makesnapshot(&Raft::MakeSnapShot, this);
@@ -105,7 +104,6 @@ void Raft::Run(){
     thread_ticker.join();
     thread_client.join();
     thread_randomaddlog.join();
-    thread_printlog.join();
     thread_persistlog.join();
     thread_applylog.join();
     thread_makesnapshot.join();
@@ -113,14 +111,14 @@ void Raft::Run(){
 
 void Raft::Init(){
     //数据初始化
-    string filepath="/home/qzp/lab/study/src/raft/server.txt";
+    string filepath="/home/qzp/lab/study/src/kvraft/raft/server.txt";
     ReadServerConfig(filepath);
     raftertype=FOLLOWER;
     votesReceived=0;
     majorityVotes=RAFTSERVERNUM/2+1;
     currentTerm=0;
     votedFor=-1;
-    logFilePath="/home/qzp/lab/study/src/raft/Node"+to_string(GetMyId())+"_log.txt";
+    logFilePath="/home/qzp/lab/study/src/kvraft/raft/Node"+to_string(GetMyId())+"_log.txt";
     
     //按理来说这个log应该是从文件中读取的，后续补上
     // std::vector<LogEntry>log;
@@ -184,7 +182,6 @@ void Raft::SendRequestVote(){
                     id_netmsg[i].ip+":"+to_string(id_netmsg[i].port), grpc::InsecureChannelCredentials()),
                     this    //传入当前raft句柄给处理请求的
                 );
-                // cout<<"Node "<<me<<"request vote from"<<i<<endl;
                 int reply=client.CallVoted();
             }));
         }
@@ -194,12 +191,10 @@ void Raft::SendRequestVote(){
         t.join();
     }
     //如果没有获得多数投票，则进入追随者状态
-    cout<<"Node "<<me<<" vote "<<votesReceived<<" majorvote "<<majorityVotes<<" term "<<currentTerm<<endl;
     //保证只能从CANDIDATE状态进入LEADER状态
     if(this->GetVotesReceivedIsMajority()&&this->GetRafterType()==CANDIDATE){
         this->setRafterType(LEADER);
         this->SetLeaderId(me);
-        // cout<<"Node "<<me<<" be a LEADER!"<<endl;
     }else{//否则进入了领导者状态
         this->setRafterType(FOLLOWER);
     }
@@ -218,7 +213,6 @@ void Raft::SendAppendEntries(){
                     id_netmsg[i].ip+":"+to_string(id_netmsg[i].port), grpc::InsecureChannelCredentials()),
                     this    //传入当前raft句柄给处理请求的
                 );
-                // cout<<"send a appendentries to "<<i<<endl;
                 int reply=client.CallAppendEntries(i);
             }));
         }
@@ -329,7 +323,6 @@ void Raft::LogPersist(){
         //这里加上了这个！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！!
         if(last_commitindex<state_machine->GetIndex()-1)last_commitindex=state_machine->GetIndex()-1;
 
-        cout<<GetTerm()<<" "<<GetMyId()<<" "<<commitIndex<<" "<<last_commitindex<<endl;
         //保存日志到硬盘上
         if(last_commitindex ==-1){//如果是新文件
             file=make_shared<ofstream>(logFilePath);
@@ -342,7 +335,6 @@ void Raft::LogPersist(){
                 std::cerr << "无法打开文件 " << logFilePath << " 进行写入。\n";
                 return;
         }
-        cout<<"Node: "<<me<<" last_commitindex "<<last_commitindex<<" commitIndex: "<<commitIndex<<endl;
         vector<LogEntry> entries=GetEntries(last_commitindex+1,commitIndex+1);
         for(auto& entry : entries){
             (*file)<< entry.m_command<<endl;
@@ -371,8 +363,6 @@ void Raft::ApplyLogLoop(){
         //如果apply落后于commitindex，则继续apply
         lastApplied++;
         vector<LogEntry> logentry=GetEntries(lastApplied,lastApplied+1);
-        // cout<<"Node "<<GetMyId()<<" "<<"dasdfhasuifhsdkvfsiuafhosdvfsdafhga"<<endl;
-        cout<<"Node : "<<me;
         state_machine->ApplyLogCommand(logentry[0],lastApplied);
         //将日志应用到状态机上，，每当完成一条命令之后，apply logindex就加一
         
@@ -404,9 +394,7 @@ void Raft::MakeSnapShot(){
                 int snapshot_term=snapshotMsg->SnapshotTerm;
 
                 delete_numof_log=apply_index-snapshot_index;
-                cout<<"Node "<<GetMyId()<<" logsize "<<log.size()<<" delete_num_log "<<delete_numof_log<<endl;
                 log.erase(log.begin(),log.begin()+delete_numof_log);
-                cout<<"logsize "<<log.size()<<endl;
             }
             //3.更新状态机参数
             state_machine->UpdateSnapshot(applyMsg);
@@ -426,8 +414,6 @@ void Raft::MakeSnapShot(){
             }
             // last_commitindex=state_machine->GetIndex()-1;
             UnlockLogReciveFlag();
-
-            cout<<"success update logfile"<<endl;
         }
     }
 }
@@ -470,22 +456,10 @@ void Raft::RandomAddLog(){
                     LogEntry log_entry("Node "+to_string(GetMyId())+" Term: "+to_string(currentTerm)+" generated a cmd:"+to_string(log_index), currentTerm,log_index);
                     //不使用AddEntrites是因为在这个函数内部已经使用了mutex，所以在这里就不太适用
                     log.push_back(log_entry);
-                    cout<<"Node "<<me<<" log: "<<"cmd"+to_string(log_index)<<endl;
                 }  
             }
             UpdateMyMatchIndex();    
             UnlockLogReciveFlag();  
         }
-    }
-}
-void Raft::PrintLog(){
-    while(1){
-        sleep(1);
-        if(!IsLogReciveFlagAviailable())continue;
-        unique_lock<mutex>lock(log_mtx);
-        cout<<"Node "<<me<<" log size: "<<log.size()<<endl;
-        for(auto& log:log){
-            cout<<"Node "<<me<<" term: "<<log.m_term<<" Log: "<<log.m_command<<" "<<endl;
-        } 
     }
 }
