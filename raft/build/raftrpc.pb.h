@@ -59,12 +59,21 @@ extern AppendntriesRequestDefaultTypeInternal _AppendntriesRequest_default_insta
 class Entry;
 struct EntryDefaultTypeInternal;
 extern EntryDefaultTypeInternal _Entry_default_instance_;
+class InstallSnapshotReply;
+struct InstallSnapshotReplyDefaultTypeInternal;
+extern InstallSnapshotReplyDefaultTypeInternal _InstallSnapshotReply_default_instance_;
+class InstallSnapshotRequest;
+struct InstallSnapshotRequestDefaultTypeInternal;
+extern InstallSnapshotRequestDefaultTypeInternal _InstallSnapshotRequest_default_instance_;
 class RequestVoteReply;
 struct RequestVoteReplyDefaultTypeInternal;
 extern RequestVoteReplyDefaultTypeInternal _RequestVoteReply_default_instance_;
 class RequestVoteRequest;
 struct RequestVoteRequestDefaultTypeInternal;
 extern RequestVoteRequestDefaultTypeInternal _RequestVoteRequest_default_instance_;
+class StateMachine;
+struct StateMachineDefaultTypeInternal;
+extern StateMachineDefaultTypeInternal _StateMachine_default_instance_;
 }  // namespace RpcModule
 namespace google {
 namespace protobuf {
@@ -76,6 +85,203 @@ namespace RpcModule {
 // ===================================================================
 
 
+// -------------------------------------------------------------------
+
+class StateMachine final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:RpcModule.StateMachine) */ {
+ public:
+  inline StateMachine() : StateMachine(nullptr) {}
+  ~StateMachine() override;
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR StateMachine(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline StateMachine(const StateMachine& from) : StateMachine(nullptr, from) {}
+  inline StateMachine(StateMachine&& from) noexcept
+      : StateMachine(nullptr, std::move(from)) {}
+  inline StateMachine& operator=(const StateMachine& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline StateMachine& operator=(StateMachine&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetArena() == from.GetArena()
+#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetArena() != nullptr
+#endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const StateMachine& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const StateMachine* internal_default_instance() {
+    return reinterpret_cast<const StateMachine*>(
+        &_StateMachine_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 1;
+  friend void swap(StateMachine& a, StateMachine& b) { a.Swap(&b); }
+  inline void Swap(StateMachine* other) {
+    if (other == this) return;
+#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() != nullptr && GetArena() == other->GetArena()) {
+#else   // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() == other->GetArena()) {
+#endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(StateMachine* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  StateMachine* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return ::google::protobuf::Message::DefaultConstruct<StateMachine>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const StateMachine& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const StateMachine& from) { StateMachine::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void InternalSwap(StateMachine* other);
+ private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() { return "RpcModule.StateMachine"; }
+
+ protected:
+  explicit StateMachine(::google::protobuf::Arena* arena);
+  StateMachine(::google::protobuf::Arena* arena, const StateMachine& from);
+  StateMachine(::google::protobuf::Arena* arena, StateMachine&& from) noexcept
+      : StateMachine(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::MessageLite::ClassData* GetClassData()
+      const final;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const final;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kDataFieldNumber = 3,
+    kIndexFieldNumber = 1,
+    kTermFieldNumber = 2,
+  };
+  // string data = 3;
+  void clear_data() ;
+  const std::string& data() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_data(Arg_&& arg, Args_... args);
+  std::string* mutable_data();
+  PROTOBUF_NODISCARD std::string* release_data();
+  void set_allocated_data(std::string* value);
+
+  private:
+  const std::string& _internal_data() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_data(
+      const std::string& value);
+  std::string* _internal_mutable_data();
+
+  public:
+  // int32 index = 1;
+  void clear_index() ;
+  ::int32_t index() const;
+  void set_index(::int32_t value);
+
+  private:
+  ::int32_t _internal_index() const;
+  void _internal_set_index(::int32_t value);
+
+  public:
+  // int32 term = 2;
+  void clear_term() ;
+  ::int32_t term() const;
+  void set_term(::int32_t value);
+
+  private:
+  ::int32_t _internal_term() const;
+  void _internal_set_term(::int32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:RpcModule.StateMachine)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      2, 3, 0,
+      35, 2>
+      _table_;
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from);
+    ::google::protobuf::internal::ArenaStringPtr data_;
+    ::int32_t index_;
+    ::int32_t term_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_raftrpc_2eproto;
+};
 // -------------------------------------------------------------------
 
 class RequestVoteRequest final : public ::google::protobuf::Message
@@ -133,7 +339,7 @@ class RequestVoteRequest final : public ::google::protobuf::Message
     return reinterpret_cast<const RequestVoteRequest*>(
         &_RequestVoteRequest_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 3;
+  static constexpr int kIndexInFileMessages = 4;
   friend void swap(RequestVoteRequest& a, RequestVoteRequest& b) { a.Swap(&b); }
   inline void Swap(RequestVoteRequest* other) {
     if (other == this) return;
@@ -336,7 +542,7 @@ class RequestVoteReply final : public ::google::protobuf::Message
     return reinterpret_cast<const RequestVoteReply*>(
         &_RequestVoteReply_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 4;
+  static constexpr int kIndexInFileMessages = 5;
   friend void swap(RequestVoteReply& a, RequestVoteReply& b) { a.Swap(&b); }
   inline void Swap(RequestVoteReply* other) {
     if (other == this) return;
@@ -452,6 +658,173 @@ class RequestVoteReply final : public ::google::protobuf::Message
                           ::google::protobuf::Arena* arena, const Impl_& from);
     ::int32_t term_;
     bool votegranted_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_raftrpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class InstallSnapshotReply final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:RpcModule.InstallSnapshotReply) */ {
+ public:
+  inline InstallSnapshotReply() : InstallSnapshotReply(nullptr) {}
+  ~InstallSnapshotReply() override;
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR InstallSnapshotReply(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline InstallSnapshotReply(const InstallSnapshotReply& from) : InstallSnapshotReply(nullptr, from) {}
+  inline InstallSnapshotReply(InstallSnapshotReply&& from) noexcept
+      : InstallSnapshotReply(nullptr, std::move(from)) {}
+  inline InstallSnapshotReply& operator=(const InstallSnapshotReply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline InstallSnapshotReply& operator=(InstallSnapshotReply&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetArena() == from.GetArena()
+#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetArena() != nullptr
+#endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const InstallSnapshotReply& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const InstallSnapshotReply* internal_default_instance() {
+    return reinterpret_cast<const InstallSnapshotReply*>(
+        &_InstallSnapshotReply_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 7;
+  friend void swap(InstallSnapshotReply& a, InstallSnapshotReply& b) { a.Swap(&b); }
+  inline void Swap(InstallSnapshotReply* other) {
+    if (other == this) return;
+#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() != nullptr && GetArena() == other->GetArena()) {
+#else   // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() == other->GetArena()) {
+#endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(InstallSnapshotReply* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  InstallSnapshotReply* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return ::google::protobuf::Message::DefaultConstruct<InstallSnapshotReply>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const InstallSnapshotReply& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const InstallSnapshotReply& from) { InstallSnapshotReply::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void InternalSwap(InstallSnapshotReply* other);
+ private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() { return "RpcModule.InstallSnapshotReply"; }
+
+ protected:
+  explicit InstallSnapshotReply(::google::protobuf::Arena* arena);
+  InstallSnapshotReply(::google::protobuf::Arena* arena, const InstallSnapshotReply& from);
+  InstallSnapshotReply(::google::protobuf::Arena* arena, InstallSnapshotReply&& from) noexcept
+      : InstallSnapshotReply(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::MessageLite::ClassData* GetClassData()
+      const final;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const final;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kTermFieldNumber = 1,
+  };
+  // int32 term = 1;
+  void clear_term() ;
+  ::int32_t term() const;
+  void set_term(::int32_t value);
+
+  private:
+  ::int32_t _internal_term() const;
+  void _internal_set_term(::int32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:RpcModule.InstallSnapshotReply)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      0, 1, 0,
+      0, 2>
+      _table_;
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from);
+    ::int32_t term_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -587,6 +960,7 @@ class Entry final : public ::google::protobuf::Message
   enum : int {
     kCmdFieldNumber = 1,
     kTermFieldNumber = 2,
+    kIndexFieldNumber = 3,
   };
   // string cmd = 1;
   void clear_cmd() ;
@@ -614,12 +988,22 @@ class Entry final : public ::google::protobuf::Message
   void _internal_set_term(::int32_t value);
 
   public:
+  // int32 index = 3;
+  void clear_index() ;
+  ::int32_t index() const;
+  void set_index(::int32_t value);
+
+  private:
+  ::int32_t _internal_index() const;
+  void _internal_set_index(::int32_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:RpcModule.Entry)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      1, 2, 0,
+      2, 3, 0,
       27, 2>
       _table_;
   friend class ::google::protobuf::MessageLite;
@@ -637,6 +1021,7 @@ class Entry final : public ::google::protobuf::Message
                           ::google::protobuf::Arena* arena, const Impl_& from);
     ::google::protobuf::internal::ArenaStringPtr cmd_;
     ::int32_t term_;
+    ::int32_t index_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -700,7 +1085,7 @@ class AppendntriesReply final : public ::google::protobuf::Message
     return reinterpret_cast<const AppendntriesReply*>(
         &_AppendntriesReply_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 2;
+  static constexpr int kIndexInFileMessages = 3;
   friend void swap(AppendntriesReply& a, AppendntriesReply& b) { a.Swap(&b); }
   inline void Swap(AppendntriesReply* other) {
     if (other == this) return;
@@ -771,8 +1156,9 @@ class AppendntriesReply final : public ::google::protobuf::Message
   // accessors -------------------------------------------------------
   enum : int {
     kTermFieldNumber = 1,
-    kSuccessFieldNumber = 2,
     kMatchIndexFieldNumber = 3,
+    kSuccessFieldNumber = 2,
+    kInstallsnapshotFieldNumber = 4,
   };
   // int32 term = 1;
   void clear_term() ;
@@ -782,16 +1168,6 @@ class AppendntriesReply final : public ::google::protobuf::Message
   private:
   ::int32_t _internal_term() const;
   void _internal_set_term(::int32_t value);
-
-  public:
-  // bool success = 2;
-  void clear_success() ;
-  bool success() const;
-  void set_success(bool value);
-
-  private:
-  bool _internal_success() const;
-  void _internal_set_success(bool value);
 
   public:
   // int32 matchIndex = 3;
@@ -804,12 +1180,32 @@ class AppendntriesReply final : public ::google::protobuf::Message
   void _internal_set_matchindex(::int32_t value);
 
   public:
+  // bool success = 2;
+  void clear_success() ;
+  bool success() const;
+  void set_success(bool value);
+
+  private:
+  bool _internal_success() const;
+  void _internal_set_success(bool value);
+
+  public:
+  // bool installsnapshot = 4;
+  void clear_installsnapshot() ;
+  bool installsnapshot() const;
+  void set_installsnapshot(bool value);
+
+  private:
+  bool _internal_installsnapshot() const;
+  void _internal_set_installsnapshot(bool value);
+
+  public:
   // @@protoc_insertion_point(class_scope:RpcModule.AppendntriesReply)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      2, 3, 0,
+      2, 4, 0,
       0, 2>
       _table_;
   friend class ::google::protobuf::MessageLite;
@@ -826,8 +1222,250 @@ class AppendntriesReply final : public ::google::protobuf::Message
     inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
                           ::google::protobuf::Arena* arena, const Impl_& from);
     ::int32_t term_;
-    bool success_;
     ::int32_t matchindex_;
+    bool success_;
+    bool installsnapshot_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_raftrpc_2eproto;
+};
+// -------------------------------------------------------------------
+
+class InstallSnapshotRequest final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:RpcModule.InstallSnapshotRequest) */ {
+ public:
+  inline InstallSnapshotRequest() : InstallSnapshotRequest(nullptr) {}
+  ~InstallSnapshotRequest() override;
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR InstallSnapshotRequest(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline InstallSnapshotRequest(const InstallSnapshotRequest& from) : InstallSnapshotRequest(nullptr, from) {}
+  inline InstallSnapshotRequest(InstallSnapshotRequest&& from) noexcept
+      : InstallSnapshotRequest(nullptr, std::move(from)) {}
+  inline InstallSnapshotRequest& operator=(const InstallSnapshotRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline InstallSnapshotRequest& operator=(InstallSnapshotRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetArena() == from.GetArena()
+#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetArena() != nullptr
+#endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const InstallSnapshotRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const InstallSnapshotRequest* internal_default_instance() {
+    return reinterpret_cast<const InstallSnapshotRequest*>(
+        &_InstallSnapshotRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 6;
+  friend void swap(InstallSnapshotRequest& a, InstallSnapshotRequest& b) { a.Swap(&b); }
+  inline void Swap(InstallSnapshotRequest* other) {
+    if (other == this) return;
+#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() != nullptr && GetArena() == other->GetArena()) {
+#else   // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() == other->GetArena()) {
+#endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(InstallSnapshotRequest* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  InstallSnapshotRequest* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return ::google::protobuf::Message::DefaultConstruct<InstallSnapshotRequest>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const InstallSnapshotRequest& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const InstallSnapshotRequest& from) { InstallSnapshotRequest::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void InternalSwap(InstallSnapshotRequest* other);
+ private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() { return "RpcModule.InstallSnapshotRequest"; }
+
+ protected:
+  explicit InstallSnapshotRequest(::google::protobuf::Arena* arena);
+  InstallSnapshotRequest(::google::protobuf::Arena* arena, const InstallSnapshotRequest& from);
+  InstallSnapshotRequest(::google::protobuf::Arena* arena, InstallSnapshotRequest&& from) noexcept
+      : InstallSnapshotRequest(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::MessageLite::ClassData* GetClassData()
+      const final;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const final;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kStatemachineFieldNumber = 5,
+    kEntriesFieldNumber = 6,
+    kTermFieldNumber = 1,
+    kLeaderIdFieldNumber = 2,
+    kLastIncludeIndexFieldNumber = 3,
+    kLastIncludeTermFieldNumber = 4,
+  };
+  // repeated .RpcModule.StateMachine statemachine = 5;
+  int statemachine_size() const;
+  private:
+  int _internal_statemachine_size() const;
+
+  public:
+  void clear_statemachine() ;
+  ::RpcModule::StateMachine* mutable_statemachine(int index);
+  ::google::protobuf::RepeatedPtrField<::RpcModule::StateMachine>* mutable_statemachine();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::RpcModule::StateMachine>& _internal_statemachine() const;
+  ::google::protobuf::RepeatedPtrField<::RpcModule::StateMachine>* _internal_mutable_statemachine();
+  public:
+  const ::RpcModule::StateMachine& statemachine(int index) const;
+  ::RpcModule::StateMachine* add_statemachine();
+  const ::google::protobuf::RepeatedPtrField<::RpcModule::StateMachine>& statemachine() const;
+  // repeated .RpcModule.Entry entries = 6;
+  int entries_size() const;
+  private:
+  int _internal_entries_size() const;
+
+  public:
+  void clear_entries() ;
+  ::RpcModule::Entry* mutable_entries(int index);
+  ::google::protobuf::RepeatedPtrField<::RpcModule::Entry>* mutable_entries();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::RpcModule::Entry>& _internal_entries() const;
+  ::google::protobuf::RepeatedPtrField<::RpcModule::Entry>* _internal_mutable_entries();
+  public:
+  const ::RpcModule::Entry& entries(int index) const;
+  ::RpcModule::Entry* add_entries();
+  const ::google::protobuf::RepeatedPtrField<::RpcModule::Entry>& entries() const;
+  // int32 term = 1;
+  void clear_term() ;
+  ::int32_t term() const;
+  void set_term(::int32_t value);
+
+  private:
+  ::int32_t _internal_term() const;
+  void _internal_set_term(::int32_t value);
+
+  public:
+  // int32 leaderId = 2;
+  void clear_leaderid() ;
+  ::int32_t leaderid() const;
+  void set_leaderid(::int32_t value);
+
+  private:
+  ::int32_t _internal_leaderid() const;
+  void _internal_set_leaderid(::int32_t value);
+
+  public:
+  // int32 lastIncludeIndex = 3;
+  void clear_lastincludeindex() ;
+  ::int32_t lastincludeindex() const;
+  void set_lastincludeindex(::int32_t value);
+
+  private:
+  ::int32_t _internal_lastincludeindex() const;
+  void _internal_set_lastincludeindex(::int32_t value);
+
+  public:
+  // int32 lastIncludeTerm = 4;
+  void clear_lastincludeterm() ;
+  ::int32_t lastincludeterm() const;
+  void set_lastincludeterm(::int32_t value);
+
+  private:
+  ::int32_t _internal_lastincludeterm() const;
+  void _internal_set_lastincludeterm(::int32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:RpcModule.InstallSnapshotRequest)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      3, 6, 2,
+      0, 2>
+      _table_;
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from);
+    ::google::protobuf::RepeatedPtrField< ::RpcModule::StateMachine > statemachine_;
+    ::google::protobuf::RepeatedPtrField< ::RpcModule::Entry > entries_;
+    ::int32_t term_;
+    ::int32_t leaderid_;
+    ::int32_t lastincludeindex_;
+    ::int32_t lastincludeterm_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -891,7 +1529,7 @@ class AppendntriesRequest final : public ::google::protobuf::Message
     return reinterpret_cast<const AppendntriesRequest*>(
         &_AppendntriesRequest_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 1;
+  static constexpr int kIndexInFileMessages = 2;
   friend void swap(AppendntriesRequest& a, AppendntriesRequest& b) { a.Swap(&b); }
   inline void Swap(AppendntriesRequest* other) {
     if (other == this) return;
@@ -1157,6 +1795,126 @@ inline void Entry::_internal_set_term(::int32_t value) {
   _impl_.term_ = value;
 }
 
+// int32 index = 3;
+inline void Entry::clear_index() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.index_ = 0;
+}
+inline ::int32_t Entry::index() const {
+  // @@protoc_insertion_point(field_get:RpcModule.Entry.index)
+  return _internal_index();
+}
+inline void Entry::set_index(::int32_t value) {
+  _internal_set_index(value);
+  // @@protoc_insertion_point(field_set:RpcModule.Entry.index)
+}
+inline ::int32_t Entry::_internal_index() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.index_;
+}
+inline void Entry::_internal_set_index(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.index_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// StateMachine
+
+// int32 index = 1;
+inline void StateMachine::clear_index() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.index_ = 0;
+}
+inline ::int32_t StateMachine::index() const {
+  // @@protoc_insertion_point(field_get:RpcModule.StateMachine.index)
+  return _internal_index();
+}
+inline void StateMachine::set_index(::int32_t value) {
+  _internal_set_index(value);
+  // @@protoc_insertion_point(field_set:RpcModule.StateMachine.index)
+}
+inline ::int32_t StateMachine::_internal_index() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.index_;
+}
+inline void StateMachine::_internal_set_index(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.index_ = value;
+}
+
+// int32 term = 2;
+inline void StateMachine::clear_term() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.term_ = 0;
+}
+inline ::int32_t StateMachine::term() const {
+  // @@protoc_insertion_point(field_get:RpcModule.StateMachine.term)
+  return _internal_term();
+}
+inline void StateMachine::set_term(::int32_t value) {
+  _internal_set_term(value);
+  // @@protoc_insertion_point(field_set:RpcModule.StateMachine.term)
+}
+inline ::int32_t StateMachine::_internal_term() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.term_;
+}
+inline void StateMachine::_internal_set_term(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.term_ = value;
+}
+
+// string data = 3;
+inline void StateMachine::clear_data() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.data_.ClearToEmpty();
+}
+inline const std::string& StateMachine::data() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:RpcModule.StateMachine.data)
+  return _internal_data();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void StateMachine::set_data(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.data_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:RpcModule.StateMachine.data)
+}
+inline std::string* StateMachine::mutable_data() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_data();
+  // @@protoc_insertion_point(field_mutable:RpcModule.StateMachine.data)
+  return _s;
+}
+inline const std::string& StateMachine::_internal_data() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.data_.Get();
+}
+inline void StateMachine::_internal_set_data(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.data_.Set(value, GetArena());
+}
+inline std::string* StateMachine::_internal_mutable_data() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  return _impl_.data_.Mutable( GetArena());
+}
+inline std::string* StateMachine::release_data() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:RpcModule.StateMachine.data)
+  return _impl_.data_.Release();
+}
+inline void StateMachine::set_allocated_data(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.data_.SetAllocated(value, GetArena());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.data_.IsDefault()) {
+          _impl_.data_.Set("", GetArena());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:RpcModule.StateMachine.data)
+}
+
 // -------------------------------------------------------------------
 
 // AppendntriesRequest
@@ -1390,6 +2148,28 @@ inline void AppendntriesReply::_internal_set_matchindex(::int32_t value) {
   _impl_.matchindex_ = value;
 }
 
+// bool installsnapshot = 4;
+inline void AppendntriesReply::clear_installsnapshot() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.installsnapshot_ = false;
+}
+inline bool AppendntriesReply::installsnapshot() const {
+  // @@protoc_insertion_point(field_get:RpcModule.AppendntriesReply.installsnapshot)
+  return _internal_installsnapshot();
+}
+inline void AppendntriesReply::set_installsnapshot(bool value) {
+  _internal_set_installsnapshot(value);
+  // @@protoc_insertion_point(field_set:RpcModule.AppendntriesReply.installsnapshot)
+}
+inline bool AppendntriesReply::_internal_installsnapshot() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.installsnapshot_;
+}
+inline void AppendntriesReply::_internal_set_installsnapshot(bool value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.installsnapshot_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // RequestVoteRequest
@@ -1528,6 +2308,222 @@ inline bool RequestVoteReply::_internal_votegranted() const {
 inline void RequestVoteReply::_internal_set_votegranted(bool value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.votegranted_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// InstallSnapshotRequest
+
+// int32 term = 1;
+inline void InstallSnapshotRequest::clear_term() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.term_ = 0;
+}
+inline ::int32_t InstallSnapshotRequest::term() const {
+  // @@protoc_insertion_point(field_get:RpcModule.InstallSnapshotRequest.term)
+  return _internal_term();
+}
+inline void InstallSnapshotRequest::set_term(::int32_t value) {
+  _internal_set_term(value);
+  // @@protoc_insertion_point(field_set:RpcModule.InstallSnapshotRequest.term)
+}
+inline ::int32_t InstallSnapshotRequest::_internal_term() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.term_;
+}
+inline void InstallSnapshotRequest::_internal_set_term(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.term_ = value;
+}
+
+// int32 leaderId = 2;
+inline void InstallSnapshotRequest::clear_leaderid() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.leaderid_ = 0;
+}
+inline ::int32_t InstallSnapshotRequest::leaderid() const {
+  // @@protoc_insertion_point(field_get:RpcModule.InstallSnapshotRequest.leaderId)
+  return _internal_leaderid();
+}
+inline void InstallSnapshotRequest::set_leaderid(::int32_t value) {
+  _internal_set_leaderid(value);
+  // @@protoc_insertion_point(field_set:RpcModule.InstallSnapshotRequest.leaderId)
+}
+inline ::int32_t InstallSnapshotRequest::_internal_leaderid() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.leaderid_;
+}
+inline void InstallSnapshotRequest::_internal_set_leaderid(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.leaderid_ = value;
+}
+
+// int32 lastIncludeIndex = 3;
+inline void InstallSnapshotRequest::clear_lastincludeindex() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.lastincludeindex_ = 0;
+}
+inline ::int32_t InstallSnapshotRequest::lastincludeindex() const {
+  // @@protoc_insertion_point(field_get:RpcModule.InstallSnapshotRequest.lastIncludeIndex)
+  return _internal_lastincludeindex();
+}
+inline void InstallSnapshotRequest::set_lastincludeindex(::int32_t value) {
+  _internal_set_lastincludeindex(value);
+  // @@protoc_insertion_point(field_set:RpcModule.InstallSnapshotRequest.lastIncludeIndex)
+}
+inline ::int32_t InstallSnapshotRequest::_internal_lastincludeindex() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.lastincludeindex_;
+}
+inline void InstallSnapshotRequest::_internal_set_lastincludeindex(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.lastincludeindex_ = value;
+}
+
+// int32 lastIncludeTerm = 4;
+inline void InstallSnapshotRequest::clear_lastincludeterm() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.lastincludeterm_ = 0;
+}
+inline ::int32_t InstallSnapshotRequest::lastincludeterm() const {
+  // @@protoc_insertion_point(field_get:RpcModule.InstallSnapshotRequest.lastIncludeTerm)
+  return _internal_lastincludeterm();
+}
+inline void InstallSnapshotRequest::set_lastincludeterm(::int32_t value) {
+  _internal_set_lastincludeterm(value);
+  // @@protoc_insertion_point(field_set:RpcModule.InstallSnapshotRequest.lastIncludeTerm)
+}
+inline ::int32_t InstallSnapshotRequest::_internal_lastincludeterm() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.lastincludeterm_;
+}
+inline void InstallSnapshotRequest::_internal_set_lastincludeterm(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.lastincludeterm_ = value;
+}
+
+// repeated .RpcModule.StateMachine statemachine = 5;
+inline int InstallSnapshotRequest::_internal_statemachine_size() const {
+  return _internal_statemachine().size();
+}
+inline int InstallSnapshotRequest::statemachine_size() const {
+  return _internal_statemachine_size();
+}
+inline void InstallSnapshotRequest::clear_statemachine() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.statemachine_.Clear();
+}
+inline ::RpcModule::StateMachine* InstallSnapshotRequest::mutable_statemachine(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:RpcModule.InstallSnapshotRequest.statemachine)
+  return _internal_mutable_statemachine()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::RpcModule::StateMachine>* InstallSnapshotRequest::mutable_statemachine()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:RpcModule.InstallSnapshotRequest.statemachine)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  return _internal_mutable_statemachine();
+}
+inline const ::RpcModule::StateMachine& InstallSnapshotRequest::statemachine(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:RpcModule.InstallSnapshotRequest.statemachine)
+  return _internal_statemachine().Get(index);
+}
+inline ::RpcModule::StateMachine* InstallSnapshotRequest::add_statemachine() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::RpcModule::StateMachine* _add = _internal_mutable_statemachine()->Add();
+  // @@protoc_insertion_point(field_add:RpcModule.InstallSnapshotRequest.statemachine)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::RpcModule::StateMachine>& InstallSnapshotRequest::statemachine() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:RpcModule.InstallSnapshotRequest.statemachine)
+  return _internal_statemachine();
+}
+inline const ::google::protobuf::RepeatedPtrField<::RpcModule::StateMachine>&
+InstallSnapshotRequest::_internal_statemachine() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.statemachine_;
+}
+inline ::google::protobuf::RepeatedPtrField<::RpcModule::StateMachine>*
+InstallSnapshotRequest::_internal_mutable_statemachine() {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return &_impl_.statemachine_;
+}
+
+// repeated .RpcModule.Entry entries = 6;
+inline int InstallSnapshotRequest::_internal_entries_size() const {
+  return _internal_entries().size();
+}
+inline int InstallSnapshotRequest::entries_size() const {
+  return _internal_entries_size();
+}
+inline void InstallSnapshotRequest::clear_entries() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.entries_.Clear();
+}
+inline ::RpcModule::Entry* InstallSnapshotRequest::mutable_entries(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:RpcModule.InstallSnapshotRequest.entries)
+  return _internal_mutable_entries()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::RpcModule::Entry>* InstallSnapshotRequest::mutable_entries()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:RpcModule.InstallSnapshotRequest.entries)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  return _internal_mutable_entries();
+}
+inline const ::RpcModule::Entry& InstallSnapshotRequest::entries(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:RpcModule.InstallSnapshotRequest.entries)
+  return _internal_entries().Get(index);
+}
+inline ::RpcModule::Entry* InstallSnapshotRequest::add_entries() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::RpcModule::Entry* _add = _internal_mutable_entries()->Add();
+  // @@protoc_insertion_point(field_add:RpcModule.InstallSnapshotRequest.entries)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::RpcModule::Entry>& InstallSnapshotRequest::entries() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:RpcModule.InstallSnapshotRequest.entries)
+  return _internal_entries();
+}
+inline const ::google::protobuf::RepeatedPtrField<::RpcModule::Entry>&
+InstallSnapshotRequest::_internal_entries() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.entries_;
+}
+inline ::google::protobuf::RepeatedPtrField<::RpcModule::Entry>*
+InstallSnapshotRequest::_internal_mutable_entries() {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return &_impl_.entries_;
+}
+
+// -------------------------------------------------------------------
+
+// InstallSnapshotReply
+
+// int32 term = 1;
+inline void InstallSnapshotReply::clear_term() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.term_ = 0;
+}
+inline ::int32_t InstallSnapshotReply::term() const {
+  // @@protoc_insertion_point(field_get:RpcModule.InstallSnapshotReply.term)
+  return _internal_term();
+}
+inline void InstallSnapshotReply::set_term(::int32_t value) {
+  _internal_set_term(value);
+  // @@protoc_insertion_point(field_set:RpcModule.InstallSnapshotReply.term)
+}
+inline ::int32_t InstallSnapshotReply::_internal_term() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.term_;
+}
+inline void InstallSnapshotReply::_internal_set_term(::int32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.term_ = value;
 }
 
 #ifdef __GNUC__

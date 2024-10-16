@@ -23,6 +23,39 @@ using namespace std;
 bool cmp(const std::pair<int, int>& a, const std::pair<int, int>& b) {
     return a.first < b.first; // 将降序
 }
+bool removeFirstNLines(const std::string& filePath, size_t n) {
+    // Step 1: Create a temporary file name
+    std::string tempFilePath = filePath + ".tmp";
+
+    // Step 2: Open the original file and the temporary file
+    std::ifstream inFile(filePath);
+    std::ofstream outFile(tempFilePath);
+
+    if (!inFile.is_open() || !outFile.is_open()) {
+        std::cerr << "Failed to open files." << std::endl;
+        return false;
+    }
+
+    // Step 3: Skip the first N lines and copy the rest to the temporary file
+    std::string line;
+    size_t lineCount = 0;
+    while (std::getline(inFile, line)) {
+        if (++lineCount > n) {
+            outFile << line << std::endl;
+        }
+    }
+
+    inFile.close();
+    outFile.close();
+
+    // Step 4: Replace the original file with the temporary file
+    if (std::rename(tempFilePath.c_str(), filePath.c_str()) != 0) {
+        std::cerr << "Failed to rename the temporary file." << std::endl;
+        return false;
+    }
+
+    return true;
+}
 // the service or tester wants to create a Raft server. the ports
 // of all the Raft servers (including this one) are in peers[]. this
 // server's port is peers[me]. all the servers' peers[] arrays
@@ -64,11 +97,18 @@ void Raft::Run(){
     thread thread_client(&Raft::ClientServer,this);                         //启动服务器进程
     thread thread_randomaddlog(&Raft::RandomAddLog,this);
     thread thread_printlog(&Raft::PrintLog,this);
-    thread thread_persistlog(&Raft::Persist ,this);
+    thread thread_persistlog(&Raft::LogPersist ,this);
+    thread thread_applylog(&Raft::ApplyLogLoop, this);
+    thread thread_makesnapshot(&Raft::MakeSnapShot, this);
 
     // 等待两个线程结束
     thread_ticker.join();
     thread_client.join();
+    thread_randomaddlog.join();
+    thread_printlog.join();
+    thread_persistlog.join();
+    thread_applylog.join();
+    thread_makesnapshot.join();
 }
 
 void Raft::Init(){
@@ -80,15 +120,19 @@ void Raft::Init(){
     majorityVotes=RAFTSERVERNUM/2+1;
     currentTerm=0;
     votedFor=-1;
+    logFilePath="/home/qzp/lab/study/src/raft/Node"+to_string(GetMyId())+"_log.txt";
     
     //按理来说这个log应该是从文件中读取的，后续补上
     // std::vector<LogEntry>log;
     commitIndex=-1;
-    lastApplied=0;
+    lastApplied=-1;
     for(int i=0;i<RAFTSERVERNUM;i++){
         nextIndex.push_back(0);
         matchIndex.push_back(-1);
     }
+
+    //初始化状态机
+    state_machine=make_shared<StateMachine>();
 }
 
 State Raft::GetState(){
@@ -247,9 +291,9 @@ void Raft::ReadServerConfig(string path){
     file.close();
 }
 //这个checkcommitindex还不能简单的判断match来决定，还要判断提交处的index与term是不是相等
-void Raft::CheckCommitIndex(){
+void Raft::CheckCommitIndex() {
     std::unordered_map<int, int> index_map;
-
+    if(!IsLogReciveFlagAviailable())return;
     // 遍历 matchIndex，统计每个索引出现的次数
     for (const auto& index : matchIndex) {
         if (index_map.find(index) == index_map.end()) {
@@ -258,69 +302,133 @@ void Raft::CheckCommitIndex(){
             ++index_map[index];
         }
     }
-    // 使用lambda表达式简化比较函数的使用
-    std::vector<std::pair<int, int>> sorted_index_map(index_map.begin(), index_map.end());
-    std::sort(sorted_index_map.begin(), sorted_index_map.end(), cmp);
-    
-    int numofcommit=0;
-    for(auto iter=index_map.begin(); iter!=index_map.end();iter++){
-        numofcommit+=iter->second;
-        //在这一部分还要判断，当前提交给其他机器的日志的任期是不是当前的
-        //不是当前的新日志的话，不改变commitindex，如果是的话，就进行改变
-        //这是为了实现，连带提交的功能
-        if(numofcommit>=majorityVotes){//如果找到中位的index。
-            //那么就判断中位的index的任期是不是等于当前任期，如果等于当前任期，则代表可以更新commit
-            //不等于的话，打破循环，什么也不做
-            if(GetIndexTerm(iter->first)==GetTerm()){
-                SetCommitIndex(max(iter->first,commitIndex));
-            }
-            break; // 一旦找到最大的提交索引就退出循环
+
+    // 确定最新的可提交索引
+    int newCommitIndex = commitIndex;
+    for (const auto& entry : index_map) {
+        if (entry.second >= majorityVotes && GetIndexTerm(entry.first) == currentTerm) {
+            newCommitIndex = std::max(newCommitIndex, entry.first);
         }
     }
+
+    SetCommitIndex(newCommitIndex); // 更新提交索引
 }
-//这一部分还需要i改进
-void Raft::Persist(){
+
+//这一部分还需要改进
+//每个机器需要保证commit的日志是持久的
+void Raft::LogPersist(){
     //日志的持久化
     //这里采用条件变量进行持久化，如果commitindex有改变，就持久到硬盘上
-    string filename="/home/qzp/lab/study/src/raft/Node"+to_string(GetMyId())+"_log.txt";
     shared_ptr<ofstream>file;
     while(1){
         //todo :
         unique_lock<mutex>lock(cv_commit_mtx);
         cv_commit.wait(lock);
+        if(!IsLogReciveFlagAviailable())continue;
+
+        //这里加上了这个！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！!
+        if(last_commitindex<state_machine->GetIndex()-1)last_commitindex=state_machine->GetIndex()-1;
+
         cout<<GetTerm()<<" "<<GetMyId()<<" "<<commitIndex<<" "<<last_commitindex<<endl;
         //保存日志到硬盘上
         if(last_commitindex ==-1){//如果是新文件
-            file=make_shared<ofstream>(filename);
+            file=make_shared<ofstream>(logFilePath);
         }
         else{                     //如果不是新文件
-            file=make_shared<ofstream>(filename,ios::app);
+            file=make_shared<ofstream>(logFilePath,ios::app);
         }
         // 检查文件是否成功打开
         if (!file->is_open()) {
-                std::cerr << "无法打开文件 " << filename << " 进行写入。\n";
+                std::cerr << "无法打开文件 " << logFilePath << " 进行写入。\n";
                 return;
         }
+        cout<<"Node: "<<me<<" last_commitindex "<<last_commitindex<<" commitIndex: "<<commitIndex<<endl;
         vector<LogEntry> entries=GetEntries(last_commitindex+1,commitIndex+1);
         for(auto& entry : entries){
             (*file)<< entry.m_command<<endl;
         }
-        
         last_commitindex=GetCommitIndex();
         file->close();
     }
-
 }
 
+//应用日志到状态机上,这一部分在后续可以继续该的，在ApplyLogCommand这里面改就行
 void Raft::ApplyLogLoop(){
     //应用到状态机上！
-    // todo：applying in status mechain
+    // todo：applying in status machine
     while(1){
         //每次获得commit事件的时候，触发一次apply，此时，将命令持久到状态机上
+        //模拟睡眠，表示处理器性能不行导致的apply过慢的情况0.5秒apply一个log
+        usleep(50000);
+        if(!IsLogReciveFlagAviailable())continue;
+        unique_lock<mutex> lock(apply_mtx);
+        {
+            unique_lock<mutex>lock(commit_mtx);
+            if(commitIndex==lastApplied){
+                continue;
+            }
+        }
+        //如果apply落后于commitindex，则继续apply
+        lastApplied++;
+        vector<LogEntry> logentry=GetEntries(lastApplied,lastApplied+1);
+        // cout<<"Node "<<GetMyId()<<" "<<"dasdfhasuifhsdkvfsiuafhosdvfsdafhga"<<endl;
+        cout<<"Node : "<<me;
+        state_machine->ApplyLogCommand(logentry[0],lastApplied);
+        //将日志应用到状态机上，，每当完成一条命令之后，apply logindex就加一
         
     }
-    //将日志应用到状态机上，，每当完成一条命令之后，apply logindex就加一
+}
 
+//开始制系统快照
+//在制作快照的时候，raft服务器不会接受外部的log传入。在这里采用条件变量，控制raft何时继续接受客户端传入消息
+//做快照的时候，要做成线程启动，定时检查log是不是超过了
+//制作快照的时候，系统的log需要锁定，log不能继续增加了
+void Raft::MakeSnapShot(){
+    while(true){
+        sleep(1);
+        if(!IsLogReciveFlagAviailable())continue;
+        if(state_machine->IsStartMakeSnapshot()){//如果日志超过一定数目，就删除状态机之前的日志，做到缩减日志的目的
+            //1.删除内存中的log
+            //在这里考虑安不安全的问题，顺序很重要
+            LockLogReciveFlag();
+            shared_ptr<ApplyMsg> applyMsg=make_shared<ApplyMsg>();
+            shared_ptr<ApplyMsg> snapshotMsg=make_shared<ApplyMsg>();
+            state_machine->GetApplyMsg(applyMsg);
+            state_machine->GetSnapShotMsg(snapshotMsg);
+            int apply_index=applyMsg->SnapshotIndex;
+            int apply_term=applyMsg->SnapshotTerm;
+            int snapshot_index=snapshotMsg->SnapshotIndex;
+            int snapshot_term=snapshotMsg->SnapshotTerm;
+
+            int delete_numof_log=apply_index-snapshot_index;
+            {
+                unique_lock<mutex> lock(log_mtx);
+                cout<<"Node "<<GetMyId()<<" logsize "<<log.size()<<" delete_num_log "<<delete_numof_log<<endl;
+                log.erase(log.begin(),log.begin()+delete_numof_log);
+                cout<<"logsize "<<log.size()<<endl;
+            }
+            //3.更新状态机参数
+            state_machine->UpdateSnapshot(applyMsg);
+            state_machine->SaveSnapshot(me);
+            //2.删除存盘上的log
+            if(removeFirstNLines(logFilePath,delete_numof_log)){
+                cout << "The first " << delete_numof_log << " lines have been removed successfully." << endl;
+            }else{
+                cout << "An error occurred during the removal process." << endl;
+            }
+            //更新了状态机快照的时候，此时raft里面的index以及不是原来的下标了，需要通过m_index找到
+            //而matchindex是与目标主机通信时候需要甬道的的参数，所以这里需要更新以下
+            for(int i=0;i<5;++i){
+                if(i!=GetMyId()){
+                    SetMatchIndex(i,GetPreLogIndex(i));
+                }
+            }
+            // last_commitindex=state_machine->GetIndex()-1;
+            UnlockLogReciveFlag();
+
+            cout<<"success update logfile"<<endl;
+        }
+    }
 }
 
 void Raft::RandomAddLog(){
@@ -330,35 +438,53 @@ void Raft::RandomAddLog(){
     //每次间隔1-3秒发送一个增加log的消息
     while(1){
         int time=1+rand()%(2);
-        sleep(time);
+        // sleep(time);
+        usleep(50000);
         if(GetRafterType()==LEADER){
+            if(!IsLogReciveFlagAviailable())continue;//如果不可以接受，就循环
             //随机时间长度
             //随即发送多少日志
+            LockLogReciveFlag();
             int num=1+rand()%3;
-            int log_index=GetLastIndex();
+            int log_index;
+            shared_ptr<ApplyMsg> statemachineLog=make_shared<ApplyMsg>();
+            state_machine->GetApplyMsg(statemachineLog);
+            {
+                unique_lock<mutex>lock(log_mtx);
+                if(log.size()==0){
+                    if(statemachineLog!=nullptr&&statemachineLog->SnapshotIndex>0){
+                        log_index=statemachineLog->SnapshotIndex;
+                    }else{
+                        log_index=-1;
+                    }
+                }else{
+                    log_index=log[log.size()-1].m_index;
+                }
+            }
             int currentTerm=GetTerm();
             {
                 unique_lock<mutex>lock(log_mtx);
                 for(int i=0;i<num;i++){
                     log_index++;
-                    LogEntry log_entry("Node "+to_string(GetMyId())+" generated a cmd:"+to_string(log_index), currentTerm);
+                    LogEntry log_entry("Node "+to_string(GetMyId())+" Term: "+to_string(currentTerm)+" generated a cmd:"+to_string(log_index), currentTerm,log_index);
                     //不使用AddEntrites是因为在这个函数内部已经使用了mutex，所以在这里就不太适用
                     log.push_back(log_entry);
                     cout<<"Node "<<me<<" log: "<<"cmd"+to_string(log_index)<<endl;
                 }  
             }
-                
+            UpdateMyMatchIndex();    
+            UnlockLogReciveFlag();  
         }
     }
-
 }
 void Raft::PrintLog(){
     while(1){
         sleep(1);
+        if(!IsLogReciveFlagAviailable())continue;
         unique_lock<mutex>lock(log_mtx);
+        cout<<"Node "<<me<<" log size: "<<log.size()<<endl;
         for(auto& log:log){
             cout<<"Node "<<me<<" term: "<<log.m_term<<" Log: "<<log.m_command<<" "<<endl;
         } 
     }
-
 }

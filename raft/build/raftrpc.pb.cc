@@ -23,6 +23,29 @@ namespace _pbi = ::google::protobuf::internal;
 namespace _fl = ::google::protobuf::internal::field_layout;
 namespace RpcModule {
 
+inline constexpr StateMachine::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : data_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        index_{0},
+        term_{0},
+        _cached_size_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR StateMachine::StateMachine(::_pbi::ConstantInitialized)
+    : _impl_(::_pbi::ConstantInitialized()) {}
+struct StateMachineDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR StateMachineDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~StateMachineDefaultTypeInternal() {}
+  union {
+    StateMachine _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StateMachineDefaultTypeInternal _StateMachine_default_instance_;
+
 inline constexpr RequestVoteRequest::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : term_{0},
@@ -65,12 +88,32 @@ struct RequestVoteReplyDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RequestVoteReplyDefaultTypeInternal _RequestVoteReply_default_instance_;
 
+inline constexpr InstallSnapshotReply::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : term_{0},
+        _cached_size_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR InstallSnapshotReply::InstallSnapshotReply(::_pbi::ConstantInitialized)
+    : _impl_(::_pbi::ConstantInitialized()) {}
+struct InstallSnapshotReplyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR InstallSnapshotReplyDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~InstallSnapshotReplyDefaultTypeInternal() {}
+  union {
+    InstallSnapshotReply _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 InstallSnapshotReplyDefaultTypeInternal _InstallSnapshotReply_default_instance_;
+
 inline constexpr Entry::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : cmd_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
         term_{0},
+        index_{0},
         _cached_size_{0} {}
 
 template <typename>
@@ -90,8 +133,9 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
 inline constexpr AppendntriesReply::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : term_{0},
-        success_{false},
         matchindex_{0},
+        success_{false},
+        installsnapshot_{false},
         _cached_size_{0} {}
 
 template <typename>
@@ -107,6 +151,30 @@ struct AppendntriesReplyDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AppendntriesReplyDefaultTypeInternal _AppendntriesReply_default_instance_;
+
+inline constexpr InstallSnapshotRequest::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : statemachine_{},
+        entries_{},
+        term_{0},
+        leaderid_{0},
+        lastincludeindex_{0},
+        lastincludeterm_{0},
+        _cached_size_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR InstallSnapshotRequest::InstallSnapshotRequest(::_pbi::ConstantInitialized)
+    : _impl_(::_pbi::ConstantInitialized()) {}
+struct InstallSnapshotRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR InstallSnapshotRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~InstallSnapshotRequestDefaultTypeInternal() {}
+  union {
+    InstallSnapshotRequest _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 InstallSnapshotRequestDefaultTypeInternal _InstallSnapshotRequest_default_instance_;
 
 inline constexpr AppendntriesRequest::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
@@ -132,7 +200,7 @@ struct AppendntriesRequestDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AppendntriesRequestDefaultTypeInternal _AppendntriesRequest_default_instance_;
 }  // namespace RpcModule
-static ::_pb::Metadata file_level_metadata_raftrpc_2eproto[5];
+static ::_pb::Metadata file_level_metadata_raftrpc_2eproto[8];
 static constexpr const ::_pb::EnumDescriptor**
     file_level_enum_descriptors_raftrpc_2eproto = nullptr;
 static constexpr const ::_pb::ServiceDescriptor**
@@ -150,6 +218,18 @@ const ::uint32_t
         ~0u,  // no sizeof(Split)
         PROTOBUF_FIELD_OFFSET(::RpcModule::Entry, _impl_.cmd_),
         PROTOBUF_FIELD_OFFSET(::RpcModule::Entry, _impl_.term_),
+        PROTOBUF_FIELD_OFFSET(::RpcModule::Entry, _impl_.index_),
+        ~0u,  // no _has_bits_
+        PROTOBUF_FIELD_OFFSET(::RpcModule::StateMachine, _internal_metadata_),
+        ~0u,  // no _extensions_
+        ~0u,  // no _oneof_case_
+        ~0u,  // no _weak_field_map_
+        ~0u,  // no _inlined_string_donated_
+        ~0u,  // no _split_
+        ~0u,  // no sizeof(Split)
+        PROTOBUF_FIELD_OFFSET(::RpcModule::StateMachine, _impl_.index_),
+        PROTOBUF_FIELD_OFFSET(::RpcModule::StateMachine, _impl_.term_),
+        PROTOBUF_FIELD_OFFSET(::RpcModule::StateMachine, _impl_.data_),
         ~0u,  // no _has_bits_
         PROTOBUF_FIELD_OFFSET(::RpcModule::AppendntriesRequest, _internal_metadata_),
         ~0u,  // no _extensions_
@@ -175,6 +255,7 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::RpcModule::AppendntriesReply, _impl_.term_),
         PROTOBUF_FIELD_OFFSET(::RpcModule::AppendntriesReply, _impl_.success_),
         PROTOBUF_FIELD_OFFSET(::RpcModule::AppendntriesReply, _impl_.matchindex_),
+        PROTOBUF_FIELD_OFFSET(::RpcModule::AppendntriesReply, _impl_.installsnapshot_),
         ~0u,  // no _has_bits_
         PROTOBUF_FIELD_OFFSET(::RpcModule::RequestVoteRequest, _internal_metadata_),
         ~0u,  // no _extensions_
@@ -197,53 +278,93 @@ const ::uint32_t
         ~0u,  // no sizeof(Split)
         PROTOBUF_FIELD_OFFSET(::RpcModule::RequestVoteReply, _impl_.term_),
         PROTOBUF_FIELD_OFFSET(::RpcModule::RequestVoteReply, _impl_.votegranted_),
+        ~0u,  // no _has_bits_
+        PROTOBUF_FIELD_OFFSET(::RpcModule::InstallSnapshotRequest, _internal_metadata_),
+        ~0u,  // no _extensions_
+        ~0u,  // no _oneof_case_
+        ~0u,  // no _weak_field_map_
+        ~0u,  // no _inlined_string_donated_
+        ~0u,  // no _split_
+        ~0u,  // no sizeof(Split)
+        PROTOBUF_FIELD_OFFSET(::RpcModule::InstallSnapshotRequest, _impl_.term_),
+        PROTOBUF_FIELD_OFFSET(::RpcModule::InstallSnapshotRequest, _impl_.leaderid_),
+        PROTOBUF_FIELD_OFFSET(::RpcModule::InstallSnapshotRequest, _impl_.lastincludeindex_),
+        PROTOBUF_FIELD_OFFSET(::RpcModule::InstallSnapshotRequest, _impl_.lastincludeterm_),
+        PROTOBUF_FIELD_OFFSET(::RpcModule::InstallSnapshotRequest, _impl_.statemachine_),
+        PROTOBUF_FIELD_OFFSET(::RpcModule::InstallSnapshotRequest, _impl_.entries_),
+        ~0u,  // no _has_bits_
+        PROTOBUF_FIELD_OFFSET(::RpcModule::InstallSnapshotReply, _internal_metadata_),
+        ~0u,  // no _extensions_
+        ~0u,  // no _oneof_case_
+        ~0u,  // no _weak_field_map_
+        ~0u,  // no _inlined_string_donated_
+        ~0u,  // no _split_
+        ~0u,  // no sizeof(Split)
+        PROTOBUF_FIELD_OFFSET(::RpcModule::InstallSnapshotReply, _impl_.term_),
 };
 
 static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
         {0, -1, -1, sizeof(::RpcModule::Entry)},
-        {10, -1, -1, sizeof(::RpcModule::AppendntriesRequest)},
-        {24, -1, -1, sizeof(::RpcModule::AppendntriesReply)},
-        {35, -1, -1, sizeof(::RpcModule::RequestVoteRequest)},
-        {47, -1, -1, sizeof(::RpcModule::RequestVoteReply)},
+        {11, -1, -1, sizeof(::RpcModule::StateMachine)},
+        {22, -1, -1, sizeof(::RpcModule::AppendntriesRequest)},
+        {36, -1, -1, sizeof(::RpcModule::AppendntriesReply)},
+        {48, -1, -1, sizeof(::RpcModule::RequestVoteRequest)},
+        {60, -1, -1, sizeof(::RpcModule::RequestVoteReply)},
+        {70, -1, -1, sizeof(::RpcModule::InstallSnapshotRequest)},
+        {84, -1, -1, sizeof(::RpcModule::InstallSnapshotReply)},
 };
 static const ::_pb::Message* const file_default_instances[] = {
     &::RpcModule::_Entry_default_instance_._instance,
+    &::RpcModule::_StateMachine_default_instance_._instance,
     &::RpcModule::_AppendntriesRequest_default_instance_._instance,
     &::RpcModule::_AppendntriesReply_default_instance_._instance,
     &::RpcModule::_RequestVoteRequest_default_instance_._instance,
     &::RpcModule::_RequestVoteReply_default_instance_._instance,
+    &::RpcModule::_InstallSnapshotRequest_default_instance_._instance,
+    &::RpcModule::_InstallSnapshotReply_default_instance_._instance,
 };
 const char descriptor_table_protodef_raftrpc_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
-    "\n\rraftrpc.proto\022\tRpcModule\"\"\n\005Entry\022\013\n\003c"
-    "md\030\001 \001(\t\022\014\n\004term\030\002 \001(\005\"\230\001\n\023AppendntriesR"
-    "equest\022\014\n\004term\030\001 \001(\005\022\020\n\010leaderId\030\002 \001(\005\022\024"
-    "\n\014prevLogIndex\030\003 \001(\005\022\023\n\013prevLogTerm\030\004 \001("
-    "\005\022!\n\007entries\030\005 \003(\0132\020.RpcModule.Entry\022\023\n\013"
-    "commitIndex\030\006 \001(\005\"F\n\021AppendntriesReply\022\014"
-    "\n\004term\030\001 \001(\005\022\017\n\007success\030\002 \001(\010\022\022\n\nmatchIn"
-    "dex\030\003 \001(\005\"b\n\022RequestVoteRequest\022\014\n\004term\030"
-    "\001 \001(\005\022\023\n\013candidateId\030\002 \001(\005\022\024\n\014lastLogInd"
-    "ex\030\003 \001(\005\022\023\n\013lastLogTerm\030\004 \001(\005\"5\n\020Request"
-    "VoteReply\022\014\n\004term\030\001 \001(\005\022\023\n\013voteGranted\030\002"
-    " \001(\0102\245\001\n\006Rafter\022N\n\014Appendntries\022\036.RpcMod"
-    "ule.AppendntriesRequest\032\034.RpcModule.Appe"
-    "ndntriesReply\"\000\022K\n\013RequestVote\022\035.RpcModu"
-    "le.RequestVoteRequest\032\033.RpcModule.Reques"
-    "tVoteReply\"\000B\006\242\002\003HLWb\006proto3"
+    "\n\rraftrpc.proto\022\tRpcModule\"1\n\005Entry\022\013\n\003c"
+    "md\030\001 \001(\t\022\014\n\004term\030\002 \001(\005\022\r\n\005index\030\003 \001(\005\"9\n"
+    "\014StateMachine\022\r\n\005index\030\001 \001(\005\022\014\n\004term\030\002 \001"
+    "(\005\022\014\n\004data\030\003 \001(\t\"\230\001\n\023AppendntriesRequest"
+    "\022\014\n\004term\030\001 \001(\005\022\020\n\010leaderId\030\002 \001(\005\022\024\n\014prev"
+    "LogIndex\030\003 \001(\005\022\023\n\013prevLogTerm\030\004 \001(\005\022!\n\007e"
+    "ntries\030\005 \003(\0132\020.RpcModule.Entry\022\023\n\013commit"
+    "Index\030\006 \001(\005\"_\n\021AppendntriesReply\022\014\n\004term"
+    "\030\001 \001(\005\022\017\n\007success\030\002 \001(\010\022\022\n\nmatchIndex\030\003 "
+    "\001(\005\022\027\n\017installsnapshot\030\004 \001(\010\"b\n\022RequestV"
+    "oteRequest\022\014\n\004term\030\001 \001(\005\022\023\n\013candidateId\030"
+    "\002 \001(\005\022\024\n\014lastLogIndex\030\003 \001(\005\022\023\n\013lastLogTe"
+    "rm\030\004 \001(\005\"5\n\020RequestVoteReply\022\014\n\004term\030\001 \001"
+    "(\005\022\023\n\013voteGranted\030\002 \001(\010\"\275\001\n\026InstallSnaps"
+    "hotRequest\022\014\n\004term\030\001 \001(\005\022\020\n\010leaderId\030\002 \001"
+    "(\005\022\030\n\020lastIncludeIndex\030\003 \001(\005\022\027\n\017lastIncl"
+    "udeTerm\030\004 \001(\005\022-\n\014statemachine\030\005 \003(\0132\027.Rp"
+    "cModule.StateMachine\022!\n\007entries\030\006 \003(\0132\020."
+    "RpcModule.Entry\"$\n\024InstallSnapshotReply\022"
+    "\014\n\004term\030\001 \001(\0052\376\001\n\006Rafter\022N\n\014Appendntries"
+    "\022\036.RpcModule.AppendntriesRequest\032\034.RpcMo"
+    "dule.AppendntriesReply\"\000\022K\n\013RequestVote\022"
+    "\035.RpcModule.RequestVoteRequest\032\033.RpcModu"
+    "le.RequestVoteReply\"\000\022W\n\017InstallSnapshot"
+    "\022!.RpcModule.InstallSnapshotRequest\032\037.Rp"
+    "cModule.InstallSnapshotReply\"\000B\006\242\002\003HLWb\006"
+    "proto3"
 };
 static ::absl::once_flag descriptor_table_raftrpc_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_raftrpc_2eproto = {
     false,
     false,
-    628,
+    1046,
     descriptor_table_protodef_raftrpc_2eproto,
     "raftrpc.proto",
     &descriptor_table_raftrpc_2eproto_once,
     nullptr,
     0,
-    5,
+    8,
     schemas,
     file_default_instances,
     TableStruct_raftrpc_2eproto::offsets,
@@ -293,7 +414,13 @@ Entry::Entry(
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_);
-  _impl_.term_ = from._impl_.term_;
+  ::memcpy(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, term_),
+           reinterpret_cast<const char *>(&from._impl_) +
+               offsetof(Impl_, term_),
+           offsetof(Impl_, index_) -
+               offsetof(Impl_, term_) +
+               sizeof(Impl_::index_));
 
   // @@protoc_insertion_point(copy_constructor:RpcModule.Entry)
 }
@@ -305,7 +432,12 @@ inline PROTOBUF_NDEBUG_INLINE Entry::Impl_::Impl_(
 
 inline void Entry::SharedCtor(::_pb::Arena* arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
-  _impl_.term_ = {};
+  ::memset(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, term_),
+           0,
+           offsetof(Impl_, index_) -
+               offsetof(Impl_, term_) +
+               sizeof(Impl_::index_));
 }
 Entry::~Entry() {
   // @@protoc_insertion_point(destructor:RpcModule.Entry)
@@ -340,7 +472,9 @@ PROTOBUF_NOINLINE void Entry::Clear() {
   (void) cached_has_bits;
 
   _impl_.cmd_.ClearToEmpty();
-  _impl_.term_ = 0;
+  ::memset(&_impl_.term_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.index_) -
+      reinterpret_cast<char*>(&_impl_.term_)) + sizeof(_impl_.index_));
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
@@ -352,15 +486,15 @@ const char* Entry::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 0, 27, 2> Entry::_table_ = {
+const ::_pbi::TcParseTable<2, 3, 0, 27, 2> Entry::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
-    2, 8,  // max_field_number, fast_idx_mask
+    3, 24,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967292,  // skipmap
+    4294967288,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    2,  // num_field_entries
+    3,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     &_Entry_default_instance_._instance,
@@ -369,12 +503,16 @@ const ::_pbi::TcParseTable<1, 2, 0, 27, 2> Entry::_table_ = {
     ::_pbi::TcParser::GetTable<::RpcModule::Entry>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // int32 term = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(Entry, _impl_.term_), 63>(),
-     {16, 63, 0, PROTOBUF_FIELD_OFFSET(Entry, _impl_.term_)}},
+    {::_pbi::TcParser::MiniParse, {}},
     // string cmd = 1;
     {::_pbi::TcParser::FastUS1,
      {10, 63, 0, PROTOBUF_FIELD_OFFSET(Entry, _impl_.cmd_)}},
+    // int32 term = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(Entry, _impl_.term_), 63>(),
+     {16, 63, 0, PROTOBUF_FIELD_OFFSET(Entry, _impl_.term_)}},
+    // int32 index = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(Entry, _impl_.index_), 63>(),
+     {24, 63, 0, PROTOBUF_FIELD_OFFSET(Entry, _impl_.index_)}},
   }}, {{
     65535, 65535
   }}, {{
@@ -383,6 +521,9 @@ const ::_pbi::TcParseTable<1, 2, 0, 27, 2> Entry::_table_ = {
     (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // int32 term = 2;
     {PROTOBUF_FIELD_OFFSET(Entry, _impl_.term_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // int32 index = 3;
+    {PROTOBUF_FIELD_OFFSET(Entry, _impl_.index_), 0, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
   }},
   // no aux_entries
@@ -415,6 +556,13 @@ const ::_pbi::TcParseTable<1, 2, 0, 27, 2> Entry::_table_ = {
             stream, this->_internal_term(), target);
   }
 
+  // int32 index = 3;
+  if (this->_internal_index() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<3>(
+            stream, this->_internal_index(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -444,6 +592,12 @@ const ::_pbi::TcParseTable<1, 2, 0, 27, 2> Entry::_table_ = {
         this->_internal_term());
   }
 
+  // int32 index = 3;
+  if (this->_internal_index() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_index());
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -461,6 +615,9 @@ void Entry::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::p
   }
   if (from._internal_term() != 0) {
     _this->_impl_.term_ = from._impl_.term_;
+  }
+  if (from._internal_index() != 0) {
+    _this->_impl_.index_ = from._impl_.index_;
   }
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -482,13 +639,282 @@ void Entry::InternalSwap(Entry* PROTOBUF_RESTRICT other) {
   ABSL_DCHECK_EQ(arena, other->GetArena());
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.cmd_, &other->_impl_.cmd_, arena);
-        swap(_impl_.term_, other->_impl_.term_);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Entry, _impl_.index_)
+      + sizeof(Entry::_impl_.index_)
+      - PROTOBUF_FIELD_OFFSET(Entry, _impl_.term_)>(
+          reinterpret_cast<char*>(&_impl_.term_),
+          reinterpret_cast<char*>(&other->_impl_.term_));
 }
 
 ::google::protobuf::Metadata Entry::GetMetadata() const {
   return ::_pbi::AssignDescriptors(&descriptor_table_raftrpc_2eproto_getter,
                                    &descriptor_table_raftrpc_2eproto_once,
                                    file_level_metadata_raftrpc_2eproto[0]);
+}
+// ===================================================================
+
+class StateMachine::_Internal {
+ public:
+};
+
+StateMachine::StateMachine(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:RpcModule.StateMachine)
+}
+inline PROTOBUF_NDEBUG_INLINE StateMachine::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
+    const Impl_& from)
+      : data_(arena, from.data_),
+        _cached_size_{0} {}
+
+StateMachine::StateMachine(
+    ::google::protobuf::Arena* arena,
+    const StateMachine& from)
+    : ::google::protobuf::Message(arena) {
+  StateMachine* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_);
+  ::memcpy(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, index_),
+           reinterpret_cast<const char *>(&from._impl_) +
+               offsetof(Impl_, index_),
+           offsetof(Impl_, term_) -
+               offsetof(Impl_, index_) +
+               sizeof(Impl_::term_));
+
+  // @@protoc_insertion_point(copy_constructor:RpcModule.StateMachine)
+}
+inline PROTOBUF_NDEBUG_INLINE StateMachine::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility,
+    ::google::protobuf::Arena* arena)
+      : data_(arena),
+        _cached_size_{0} {}
+
+inline void StateMachine::SharedCtor(::_pb::Arena* arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, index_),
+           0,
+           offsetof(Impl_, term_) -
+               offsetof(Impl_, index_) +
+               sizeof(Impl_::term_));
+}
+StateMachine::~StateMachine() {
+  // @@protoc_insertion_point(destructor:RpcModule.StateMachine)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void StateMachine::SharedDtor() {
+  ABSL_DCHECK(GetArena() == nullptr);
+  _impl_.data_.Destroy();
+  _impl_.~Impl_();
+}
+
+const ::google::protobuf::MessageLite::ClassData*
+StateMachine::GetClassData() const {
+  PROTOBUF_CONSTINIT static const ::google::protobuf::MessageLite::
+      ClassDataFull _data_ = {
+          {
+              nullptr,  // OnDemandRegisterArenaDtor
+              PROTOBUF_FIELD_OFFSET(StateMachine, _impl_._cached_size_),
+              false,
+          },
+          &StateMachine::MergeImpl,
+          &StateMachine::kDescriptorMethods,
+      };
+  return &_data_;
+}
+PROTOBUF_NOINLINE void StateMachine::Clear() {
+// @@protoc_insertion_point(message_clear_start:RpcModule.StateMachine)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.data_.ClearToEmpty();
+  ::memset(&_impl_.index_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.term_) -
+      reinterpret_cast<char*>(&_impl_.index_)) + sizeof(_impl_.term_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* StateMachine::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 3, 0, 35, 2> StateMachine::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    3, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967288,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_StateMachine_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::RpcModule::StateMachine>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // int32 index = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(StateMachine, _impl_.index_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(StateMachine, _impl_.index_)}},
+    // int32 term = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(StateMachine, _impl_.term_), 63>(),
+     {16, 63, 0, PROTOBUF_FIELD_OFFSET(StateMachine, _impl_.term_)}},
+    // string data = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(StateMachine, _impl_.data_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // int32 index = 1;
+    {PROTOBUF_FIELD_OFFSET(StateMachine, _impl_.index_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // int32 term = 2;
+    {PROTOBUF_FIELD_OFFSET(StateMachine, _impl_.term_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // string data = 3;
+    {PROTOBUF_FIELD_OFFSET(StateMachine, _impl_.data_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\26\0\0\4\0\0\0\0"
+    "RpcModule.StateMachine"
+    "data"
+  }},
+};
+
+::uint8_t* StateMachine::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:RpcModule.StateMachine)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // int32 index = 1;
+  if (this->_internal_index() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<1>(
+            stream, this->_internal_index(), target);
+  }
+
+  // int32 term = 2;
+  if (this->_internal_term() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<2>(
+            stream, this->_internal_term(), target);
+  }
+
+  // string data = 3;
+  if (!this->_internal_data().empty()) {
+    const std::string& _s = this->_internal_data();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "RpcModule.StateMachine.data");
+    target = stream->WriteStringMaybeAliased(3, _s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:RpcModule.StateMachine)
+  return target;
+}
+
+::size_t StateMachine::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:RpcModule.StateMachine)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string data = 3;
+  if (!this->_internal_data().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_data());
+  }
+
+  // int32 index = 1;
+  if (this->_internal_index() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_index());
+  }
+
+  // int32 term = 2;
+  if (this->_internal_term() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_term());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+
+void StateMachine::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<StateMachine*>(&to_msg);
+  auto& from = static_cast<const StateMachine&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:RpcModule.StateMachine)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_data().empty()) {
+    _this->_internal_set_data(from._internal_data());
+  }
+  if (from._internal_index() != 0) {
+    _this->_impl_.index_ = from._impl_.index_;
+  }
+  if (from._internal_term() != 0) {
+    _this->_impl_.term_ = from._impl_.term_;
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void StateMachine::CopyFrom(const StateMachine& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:RpcModule.StateMachine)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool StateMachine::IsInitialized() const {
+  return true;
+}
+
+void StateMachine::InternalSwap(StateMachine* PROTOBUF_RESTRICT other) {
+  using std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.data_, &other->_impl_.data_, arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(StateMachine, _impl_.term_)
+      + sizeof(StateMachine::_impl_.term_)
+      - PROTOBUF_FIELD_OFFSET(StateMachine, _impl_.index_)>(
+          reinterpret_cast<char*>(&_impl_.index_),
+          reinterpret_cast<char*>(&other->_impl_.index_));
+}
+
+::google::protobuf::Metadata StateMachine::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(&descriptor_table_raftrpc_2eproto_getter,
+                                   &descriptor_table_raftrpc_2eproto_once,
+                                   file_level_metadata_raftrpc_2eproto[1]);
 }
 // ===================================================================
 
@@ -814,7 +1240,7 @@ void AppendntriesRequest::InternalSwap(AppendntriesRequest* PROTOBUF_RESTRICT ot
 ::google::protobuf::Metadata AppendntriesRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(&descriptor_table_raftrpc_2eproto_getter,
                                    &descriptor_table_raftrpc_2eproto_once,
-                                   file_level_metadata_raftrpc_2eproto[1]);
+                                   file_level_metadata_raftrpc_2eproto[2]);
 }
 // ===================================================================
 
@@ -842,9 +1268,9 @@ inline void AppendntriesReply::SharedCtor(::_pb::Arena* arena) {
   ::memset(reinterpret_cast<char *>(&_impl_) +
                offsetof(Impl_, term_),
            0,
-           offsetof(Impl_, matchindex_) -
+           offsetof(Impl_, installsnapshot_) -
                offsetof(Impl_, term_) +
-               sizeof(Impl_::matchindex_));
+               sizeof(Impl_::installsnapshot_));
 }
 AppendntriesReply::~AppendntriesReply() {
   // @@protoc_insertion_point(destructor:RpcModule.AppendntriesReply)
@@ -878,8 +1304,8 @@ PROTOBUF_NOINLINE void AppendntriesReply::Clear() {
   (void) cached_has_bits;
 
   ::memset(&_impl_.term_, 0, static_cast<::size_t>(
-      reinterpret_cast<char*>(&_impl_.matchindex_) -
-      reinterpret_cast<char*>(&_impl_.term_)) + sizeof(_impl_.matchindex_));
+      reinterpret_cast<char*>(&_impl_.installsnapshot_) -
+      reinterpret_cast<char*>(&_impl_.term_)) + sizeof(_impl_.installsnapshot_));
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
@@ -891,15 +1317,15 @@ const char* AppendntriesReply::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 3, 0, 0, 2> AppendntriesReply::_table_ = {
+const ::_pbi::TcParseTable<2, 4, 0, 0, 2> AppendntriesReply::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
-    3, 24,  // max_field_number, fast_idx_mask
+    4, 24,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967288,  // skipmap
+    4294967280,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    3,  // num_field_entries
+    4,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     &_AppendntriesReply_default_instance_._instance,
@@ -908,7 +1334,9 @@ const ::_pbi::TcParseTable<2, 3, 0, 0, 2> AppendntriesReply::_table_ = {
     ::_pbi::TcParser::GetTable<::RpcModule::AppendntriesReply>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    {::_pbi::TcParser::MiniParse, {}},
+    // bool installsnapshot = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(AppendntriesReply, _impl_.installsnapshot_), 63>(),
+     {32, 63, 0, PROTOBUF_FIELD_OFFSET(AppendntriesReply, _impl_.installsnapshot_)}},
     // int32 term = 1;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(AppendntriesReply, _impl_.term_), 63>(),
      {8, 63, 0, PROTOBUF_FIELD_OFFSET(AppendntriesReply, _impl_.term_)}},
@@ -930,6 +1358,9 @@ const ::_pbi::TcParseTable<2, 3, 0, 0, 2> AppendntriesReply::_table_ = {
     // int32 matchIndex = 3;
     {PROTOBUF_FIELD_OFFSET(AppendntriesReply, _impl_.matchindex_), 0, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // bool installsnapshot = 4;
+    {PROTOBUF_FIELD_OFFSET(AppendntriesReply, _impl_.installsnapshot_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBool)},
   }},
   // no aux_entries
   {{
@@ -964,6 +1395,13 @@ const ::_pbi::TcParseTable<2, 3, 0, 0, 2> AppendntriesReply::_table_ = {
             stream, this->_internal_matchindex(), target);
   }
 
+  // bool installsnapshot = 4;
+  if (this->_internal_installsnapshot() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(
+        4, this->_internal_installsnapshot(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -987,15 +1425,20 @@ const ::_pbi::TcParseTable<2, 3, 0, 0, 2> AppendntriesReply::_table_ = {
         this->_internal_term());
   }
 
+  // int32 matchIndex = 3;
+  if (this->_internal_matchindex() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_matchindex());
+  }
+
   // bool success = 2;
   if (this->_internal_success() != 0) {
     total_size += 2;
   }
 
-  // int32 matchIndex = 3;
-  if (this->_internal_matchindex() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
-        this->_internal_matchindex());
+  // bool installsnapshot = 4;
+  if (this->_internal_installsnapshot() != 0) {
+    total_size += 2;
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -1013,11 +1456,14 @@ void AppendntriesReply::MergeImpl(::google::protobuf::MessageLite& to_msg, const
   if (from._internal_term() != 0) {
     _this->_impl_.term_ = from._impl_.term_;
   }
+  if (from._internal_matchindex() != 0) {
+    _this->_impl_.matchindex_ = from._impl_.matchindex_;
+  }
   if (from._internal_success() != 0) {
     _this->_impl_.success_ = from._impl_.success_;
   }
-  if (from._internal_matchindex() != 0) {
-    _this->_impl_.matchindex_ = from._impl_.matchindex_;
+  if (from._internal_installsnapshot() != 0) {
+    _this->_impl_.installsnapshot_ = from._impl_.installsnapshot_;
   }
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -1037,8 +1483,8 @@ void AppendntriesReply::InternalSwap(AppendntriesReply* PROTOBUF_RESTRICT other)
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(AppendntriesReply, _impl_.matchindex_)
-      + sizeof(AppendntriesReply::_impl_.matchindex_)
+      PROTOBUF_FIELD_OFFSET(AppendntriesReply, _impl_.installsnapshot_)
+      + sizeof(AppendntriesReply::_impl_.installsnapshot_)
       - PROTOBUF_FIELD_OFFSET(AppendntriesReply, _impl_.term_)>(
           reinterpret_cast<char*>(&_impl_.term_),
           reinterpret_cast<char*>(&other->_impl_.term_));
@@ -1047,7 +1493,7 @@ void AppendntriesReply::InternalSwap(AppendntriesReply* PROTOBUF_RESTRICT other)
 ::google::protobuf::Metadata AppendntriesReply::GetMetadata() const {
   return ::_pbi::AssignDescriptors(&descriptor_table_raftrpc_2eproto_getter,
                                    &descriptor_table_raftrpc_2eproto_once,
-                                   file_level_metadata_raftrpc_2eproto[2]);
+                                   file_level_metadata_raftrpc_2eproto[3]);
 }
 // ===================================================================
 
@@ -1302,7 +1748,7 @@ void RequestVoteRequest::InternalSwap(RequestVoteRequest* PROTOBUF_RESTRICT othe
 ::google::protobuf::Metadata RequestVoteRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(&descriptor_table_raftrpc_2eproto_getter,
                                    &descriptor_table_raftrpc_2eproto_once,
-                                   file_level_metadata_raftrpc_2eproto[3]);
+                                   file_level_metadata_raftrpc_2eproto[4]);
 }
 // ===================================================================
 
@@ -1512,7 +1958,517 @@ void RequestVoteReply::InternalSwap(RequestVoteReply* PROTOBUF_RESTRICT other) {
 ::google::protobuf::Metadata RequestVoteReply::GetMetadata() const {
   return ::_pbi::AssignDescriptors(&descriptor_table_raftrpc_2eproto_getter,
                                    &descriptor_table_raftrpc_2eproto_once,
-                                   file_level_metadata_raftrpc_2eproto[4]);
+                                   file_level_metadata_raftrpc_2eproto[5]);
+}
+// ===================================================================
+
+class InstallSnapshotRequest::_Internal {
+ public:
+};
+
+InstallSnapshotRequest::InstallSnapshotRequest(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:RpcModule.InstallSnapshotRequest)
+}
+inline PROTOBUF_NDEBUG_INLINE InstallSnapshotRequest::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
+    const Impl_& from)
+      : statemachine_{visibility, arena, from.statemachine_},
+        entries_{visibility, arena, from.entries_},
+        _cached_size_{0} {}
+
+InstallSnapshotRequest::InstallSnapshotRequest(
+    ::google::protobuf::Arena* arena,
+    const InstallSnapshotRequest& from)
+    : ::google::protobuf::Message(arena) {
+  InstallSnapshotRequest* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_);
+  ::memcpy(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, term_),
+           reinterpret_cast<const char *>(&from._impl_) +
+               offsetof(Impl_, term_),
+           offsetof(Impl_, lastincludeterm_) -
+               offsetof(Impl_, term_) +
+               sizeof(Impl_::lastincludeterm_));
+
+  // @@protoc_insertion_point(copy_constructor:RpcModule.InstallSnapshotRequest)
+}
+inline PROTOBUF_NDEBUG_INLINE InstallSnapshotRequest::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility,
+    ::google::protobuf::Arena* arena)
+      : statemachine_{visibility, arena},
+        entries_{visibility, arena},
+        _cached_size_{0} {}
+
+inline void InstallSnapshotRequest::SharedCtor(::_pb::Arena* arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, term_),
+           0,
+           offsetof(Impl_, lastincludeterm_) -
+               offsetof(Impl_, term_) +
+               sizeof(Impl_::lastincludeterm_));
+}
+InstallSnapshotRequest::~InstallSnapshotRequest() {
+  // @@protoc_insertion_point(destructor:RpcModule.InstallSnapshotRequest)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void InstallSnapshotRequest::SharedDtor() {
+  ABSL_DCHECK(GetArena() == nullptr);
+  _impl_.~Impl_();
+}
+
+const ::google::protobuf::MessageLite::ClassData*
+InstallSnapshotRequest::GetClassData() const {
+  PROTOBUF_CONSTINIT static const ::google::protobuf::MessageLite::
+      ClassDataFull _data_ = {
+          {
+              nullptr,  // OnDemandRegisterArenaDtor
+              PROTOBUF_FIELD_OFFSET(InstallSnapshotRequest, _impl_._cached_size_),
+              false,
+          },
+          &InstallSnapshotRequest::MergeImpl,
+          &InstallSnapshotRequest::kDescriptorMethods,
+      };
+  return &_data_;
+}
+PROTOBUF_NOINLINE void InstallSnapshotRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:RpcModule.InstallSnapshotRequest)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.statemachine_.Clear();
+  _impl_.entries_.Clear();
+  ::memset(&_impl_.term_, 0, static_cast<::size_t>(
+      reinterpret_cast<char*>(&_impl_.lastincludeterm_) -
+      reinterpret_cast<char*>(&_impl_.term_)) + sizeof(_impl_.lastincludeterm_));
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* InstallSnapshotRequest::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<3, 6, 2, 0, 2> InstallSnapshotRequest::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    6, 56,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967232,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    6,  // num_field_entries
+    2,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_InstallSnapshotRequest_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::RpcModule::InstallSnapshotRequest>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // int32 term = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(InstallSnapshotRequest, _impl_.term_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(InstallSnapshotRequest, _impl_.term_)}},
+    // int32 leaderId = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(InstallSnapshotRequest, _impl_.leaderid_), 63>(),
+     {16, 63, 0, PROTOBUF_FIELD_OFFSET(InstallSnapshotRequest, _impl_.leaderid_)}},
+    // int32 lastIncludeIndex = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(InstallSnapshotRequest, _impl_.lastincludeindex_), 63>(),
+     {24, 63, 0, PROTOBUF_FIELD_OFFSET(InstallSnapshotRequest, _impl_.lastincludeindex_)}},
+    // int32 lastIncludeTerm = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(InstallSnapshotRequest, _impl_.lastincludeterm_), 63>(),
+     {32, 63, 0, PROTOBUF_FIELD_OFFSET(InstallSnapshotRequest, _impl_.lastincludeterm_)}},
+    // repeated .RpcModule.StateMachine statemachine = 5;
+    {::_pbi::TcParser::FastMtR1,
+     {42, 63, 0, PROTOBUF_FIELD_OFFSET(InstallSnapshotRequest, _impl_.statemachine_)}},
+    // repeated .RpcModule.Entry entries = 6;
+    {::_pbi::TcParser::FastMtR1,
+     {50, 63, 1, PROTOBUF_FIELD_OFFSET(InstallSnapshotRequest, _impl_.entries_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // int32 term = 1;
+    {PROTOBUF_FIELD_OFFSET(InstallSnapshotRequest, _impl_.term_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // int32 leaderId = 2;
+    {PROTOBUF_FIELD_OFFSET(InstallSnapshotRequest, _impl_.leaderid_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // int32 lastIncludeIndex = 3;
+    {PROTOBUF_FIELD_OFFSET(InstallSnapshotRequest, _impl_.lastincludeindex_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // int32 lastIncludeTerm = 4;
+    {PROTOBUF_FIELD_OFFSET(InstallSnapshotRequest, _impl_.lastincludeterm_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+    // repeated .RpcModule.StateMachine statemachine = 5;
+    {PROTOBUF_FIELD_OFFSET(InstallSnapshotRequest, _impl_.statemachine_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+    // repeated .RpcModule.Entry entries = 6;
+    {PROTOBUF_FIELD_OFFSET(InstallSnapshotRequest, _impl_.entries_), 0, 1,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::RpcModule::StateMachine>()},
+    {::_pbi::TcParser::GetTable<::RpcModule::Entry>()},
+  }}, {{
+  }},
+};
+
+::uint8_t* InstallSnapshotRequest::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:RpcModule.InstallSnapshotRequest)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // int32 term = 1;
+  if (this->_internal_term() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<1>(
+            stream, this->_internal_term(), target);
+  }
+
+  // int32 leaderId = 2;
+  if (this->_internal_leaderid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<2>(
+            stream, this->_internal_leaderid(), target);
+  }
+
+  // int32 lastIncludeIndex = 3;
+  if (this->_internal_lastincludeindex() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<3>(
+            stream, this->_internal_lastincludeindex(), target);
+  }
+
+  // int32 lastIncludeTerm = 4;
+  if (this->_internal_lastincludeterm() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<4>(
+            stream, this->_internal_lastincludeterm(), target);
+  }
+
+  // repeated .RpcModule.StateMachine statemachine = 5;
+  for (unsigned i = 0, n = static_cast<unsigned>(
+                           this->_internal_statemachine_size());
+       i < n; i++) {
+    const auto& repfield = this->_internal_statemachine().Get(i);
+    target =
+        ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+            5, repfield, repfield.GetCachedSize(),
+            target, stream);
+  }
+
+  // repeated .RpcModule.Entry entries = 6;
+  for (unsigned i = 0, n = static_cast<unsigned>(
+                           this->_internal_entries_size());
+       i < n; i++) {
+    const auto& repfield = this->_internal_entries().Get(i);
+    target =
+        ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+            6, repfield, repfield.GetCachedSize(),
+            target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:RpcModule.InstallSnapshotRequest)
+  return target;
+}
+
+::size_t InstallSnapshotRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:RpcModule.InstallSnapshotRequest)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .RpcModule.StateMachine statemachine = 5;
+  total_size += 1UL * this->_internal_statemachine_size();
+  for (const auto& msg : this->_internal_statemachine()) {
+    total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
+  }
+  // repeated .RpcModule.Entry entries = 6;
+  total_size += 1UL * this->_internal_entries_size();
+  for (const auto& msg : this->_internal_entries()) {
+    total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
+  }
+  // int32 term = 1;
+  if (this->_internal_term() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_term());
+  }
+
+  // int32 leaderId = 2;
+  if (this->_internal_leaderid() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_leaderid());
+  }
+
+  // int32 lastIncludeIndex = 3;
+  if (this->_internal_lastincludeindex() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_lastincludeindex());
+  }
+
+  // int32 lastIncludeTerm = 4;
+  if (this->_internal_lastincludeterm() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_lastincludeterm());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+
+void InstallSnapshotRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<InstallSnapshotRequest*>(&to_msg);
+  auto& from = static_cast<const InstallSnapshotRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:RpcModule.InstallSnapshotRequest)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_internal_mutable_statemachine()->MergeFrom(
+      from._internal_statemachine());
+  _this->_internal_mutable_entries()->MergeFrom(
+      from._internal_entries());
+  if (from._internal_term() != 0) {
+    _this->_impl_.term_ = from._impl_.term_;
+  }
+  if (from._internal_leaderid() != 0) {
+    _this->_impl_.leaderid_ = from._impl_.leaderid_;
+  }
+  if (from._internal_lastincludeindex() != 0) {
+    _this->_impl_.lastincludeindex_ = from._impl_.lastincludeindex_;
+  }
+  if (from._internal_lastincludeterm() != 0) {
+    _this->_impl_.lastincludeterm_ = from._impl_.lastincludeterm_;
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void InstallSnapshotRequest::CopyFrom(const InstallSnapshotRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:RpcModule.InstallSnapshotRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool InstallSnapshotRequest::IsInitialized() const {
+  return true;
+}
+
+void InstallSnapshotRequest::InternalSwap(InstallSnapshotRequest* PROTOBUF_RESTRICT other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.statemachine_.InternalSwap(&other->_impl_.statemachine_);
+  _impl_.entries_.InternalSwap(&other->_impl_.entries_);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(InstallSnapshotRequest, _impl_.lastincludeterm_)
+      + sizeof(InstallSnapshotRequest::_impl_.lastincludeterm_)
+      - PROTOBUF_FIELD_OFFSET(InstallSnapshotRequest, _impl_.term_)>(
+          reinterpret_cast<char*>(&_impl_.term_),
+          reinterpret_cast<char*>(&other->_impl_.term_));
+}
+
+::google::protobuf::Metadata InstallSnapshotRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(&descriptor_table_raftrpc_2eproto_getter,
+                                   &descriptor_table_raftrpc_2eproto_once,
+                                   file_level_metadata_raftrpc_2eproto[6]);
+}
+// ===================================================================
+
+class InstallSnapshotReply::_Internal {
+ public:
+};
+
+InstallSnapshotReply::InstallSnapshotReply(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:RpcModule.InstallSnapshotReply)
+}
+InstallSnapshotReply::InstallSnapshotReply(
+    ::google::protobuf::Arena* arena, const InstallSnapshotReply& from)
+    : InstallSnapshotReply(arena) {
+  MergeFrom(from);
+}
+inline PROTOBUF_NDEBUG_INLINE InstallSnapshotReply::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility,
+    ::google::protobuf::Arena* arena)
+      : _cached_size_{0} {}
+
+inline void InstallSnapshotReply::SharedCtor(::_pb::Arena* arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  _impl_.term_ = {};
+}
+InstallSnapshotReply::~InstallSnapshotReply() {
+  // @@protoc_insertion_point(destructor:RpcModule.InstallSnapshotReply)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void InstallSnapshotReply::SharedDtor() {
+  ABSL_DCHECK(GetArena() == nullptr);
+  _impl_.~Impl_();
+}
+
+const ::google::protobuf::MessageLite::ClassData*
+InstallSnapshotReply::GetClassData() const {
+  PROTOBUF_CONSTINIT static const ::google::protobuf::MessageLite::
+      ClassDataFull _data_ = {
+          {
+              nullptr,  // OnDemandRegisterArenaDtor
+              PROTOBUF_FIELD_OFFSET(InstallSnapshotReply, _impl_._cached_size_),
+              false,
+          },
+          &InstallSnapshotReply::MergeImpl,
+          &InstallSnapshotReply::kDescriptorMethods,
+      };
+  return &_data_;
+}
+PROTOBUF_NOINLINE void InstallSnapshotReply::Clear() {
+// @@protoc_insertion_point(message_clear_start:RpcModule.InstallSnapshotReply)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.term_ = 0;
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* InstallSnapshotReply::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 0, 2> InstallSnapshotReply::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_InstallSnapshotReply_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::RpcModule::InstallSnapshotReply>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    // int32 term = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(InstallSnapshotReply, _impl_.term_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(InstallSnapshotReply, _impl_.term_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // int32 term = 1;
+    {PROTOBUF_FIELD_OFFSET(InstallSnapshotReply, _impl_.term_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kInt32)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
+
+::uint8_t* InstallSnapshotReply::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:RpcModule.InstallSnapshotReply)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // int32 term = 1;
+  if (this->_internal_term() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::
+        WriteInt32ToArrayWithField<1>(
+            stream, this->_internal_term(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:RpcModule.InstallSnapshotReply)
+  return target;
+}
+
+::size_t InstallSnapshotReply::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:RpcModule.InstallSnapshotReply)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int32 term = 1;
+  if (this->_internal_term() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_term());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+
+void InstallSnapshotReply::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<InstallSnapshotReply*>(&to_msg);
+  auto& from = static_cast<const InstallSnapshotReply&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:RpcModule.InstallSnapshotReply)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_term() != 0) {
+    _this->_impl_.term_ = from._impl_.term_;
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void InstallSnapshotReply::CopyFrom(const InstallSnapshotReply& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:RpcModule.InstallSnapshotReply)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool InstallSnapshotReply::IsInitialized() const {
+  return true;
+}
+
+void InstallSnapshotReply::InternalSwap(InstallSnapshotReply* PROTOBUF_RESTRICT other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+        swap(_impl_.term_, other->_impl_.term_);
+}
+
+::google::protobuf::Metadata InstallSnapshotReply::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(&descriptor_table_raftrpc_2eproto_getter,
+                                   &descriptor_table_raftrpc_2eproto_once,
+                                   file_level_metadata_raftrpc_2eproto[7]);
 }
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace RpcModule

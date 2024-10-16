@@ -24,11 +24,19 @@ service Rafter {
   // 如果这个为空，则视为心跳包，可以携带信息
   rpc Appendntries (AppendntriesRequest) returns (AppendntriesReply) {}
   rpc RequestVote (RequestVoteRequest) returns (RequestVoteReply) {}
+  rpc InstallSnapshot (InstallSnapshotRequest)returns (InstallSnapshotReply){}
 }
 
 message Entry{
   string cmd=1;
   int32 term=2;
+  int32 index=3;
+}
+
+message StateMachine{
+  int32 index=1;
+  int32 term=2;
+  string data=3;
 }
 
 // The request message containing the user's name.
@@ -46,6 +54,7 @@ message AppendntriesReply {
   int32 term=1;
   bool success=2;
   int32 matchIndex=3;
+  bool installsnapshot=4;
 }
 
 message RequestVoteRequest{
@@ -58,4 +67,17 @@ message RequestVoteRequest{
 message RequestVoteReply{
   int32 term=1;
   bool voteGranted=2; 
+}
+
+message InstallSnapshotRequest{
+  int32 term=1;
+  int32 leaderId=2;
+  int32 lastIncludeIndex=3;//替换此索引之前的所有日志,着一个include应该是commited之前的所有日志
+  int32 lastIncludeTerm=4;//lastIndluceIndex的任期
+  repeated StateMachine statemachine=5;
+  repeated Entry entries=6; //applied_index后面还没commit的日志
+}
+
+message InstallSnapshotReply{
+  int32 term=1;
 }

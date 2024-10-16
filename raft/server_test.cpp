@@ -12,9 +12,8 @@ int main(){
     for(int i=0;i<5;i++){
         threads.push_back(thread([i]{
             //按理说，创建之后就会一直保持rafter的运行
-            Raft* raft=new Raft(i);
+            shared_ptr<Raft> raft=make_shared<Raft>(i);
             raft->Run();
-            delete raft;
         }));
     }
     //随便找一个主机，获取谁是leader

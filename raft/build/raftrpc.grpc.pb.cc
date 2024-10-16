@@ -24,6 +24,7 @@ namespace RpcModule {
 static const char* Rafter_method_names[] = {
   "/RpcModule.Rafter/Appendntries",
   "/RpcModule.Rafter/RequestVote",
+  "/RpcModule.Rafter/InstallSnapshot",
 };
 
 std::unique_ptr< Rafter::Stub> Rafter::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -35,6 +36,7 @@ std::unique_ptr< Rafter::Stub> Rafter::NewStub(const std::shared_ptr< ::grpc::Ch
 Rafter::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_Appendntries_(Rafter_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_RequestVote_(Rafter_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_InstallSnapshot_(Rafter_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status Rafter::Stub::Appendntries(::grpc::ClientContext* context, const ::RpcModule::AppendntriesRequest& request, ::RpcModule::AppendntriesReply* response) {
@@ -83,6 +85,29 @@ void Rafter::Stub::async::RequestVote(::grpc::ClientContext* context, const ::Rp
   return result;
 }
 
+::grpc::Status Rafter::Stub::InstallSnapshot(::grpc::ClientContext* context, const ::RpcModule::InstallSnapshotRequest& request, ::RpcModule::InstallSnapshotReply* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::RpcModule::InstallSnapshotRequest, ::RpcModule::InstallSnapshotReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_InstallSnapshot_, context, request, response);
+}
+
+void Rafter::Stub::async::InstallSnapshot(::grpc::ClientContext* context, const ::RpcModule::InstallSnapshotRequest* request, ::RpcModule::InstallSnapshotReply* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::RpcModule::InstallSnapshotRequest, ::RpcModule::InstallSnapshotReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_InstallSnapshot_, context, request, response, std::move(f));
+}
+
+void Rafter::Stub::async::InstallSnapshot(::grpc::ClientContext* context, const ::RpcModule::InstallSnapshotRequest* request, ::RpcModule::InstallSnapshotReply* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_InstallSnapshot_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::RpcModule::InstallSnapshotReply>* Rafter::Stub::PrepareAsyncInstallSnapshotRaw(::grpc::ClientContext* context, const ::RpcModule::InstallSnapshotRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::RpcModule::InstallSnapshotReply, ::RpcModule::InstallSnapshotRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_InstallSnapshot_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::RpcModule::InstallSnapshotReply>* Rafter::Stub::AsyncInstallSnapshotRaw(::grpc::ClientContext* context, const ::RpcModule::InstallSnapshotRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncInstallSnapshotRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 Rafter::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       Rafter_method_names[0],
@@ -104,6 +129,16 @@ Rafter::Service::Service() {
              ::RpcModule::RequestVoteReply* resp) {
                return service->RequestVote(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Rafter_method_names[2],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Rafter::Service, ::RpcModule::InstallSnapshotRequest, ::RpcModule::InstallSnapshotReply, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Rafter::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::RpcModule::InstallSnapshotRequest* req,
+             ::RpcModule::InstallSnapshotReply* resp) {
+               return service->InstallSnapshot(ctx, req, resp);
+             }, this)));
 }
 
 Rafter::Service::~Service() {
@@ -117,6 +152,13 @@ Rafter::Service::~Service() {
 }
 
 ::grpc::Status Rafter::Service::RequestVote(::grpc::ServerContext* context, const ::RpcModule::RequestVoteRequest* request, ::RpcModule::RequestVoteReply* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status Rafter::Service::InstallSnapshot(::grpc::ServerContext* context, const ::RpcModule::InstallSnapshotRequest* request, ::RpcModule::InstallSnapshotReply* response) {
   (void) context;
   (void) request;
   (void) response;

@@ -19,16 +19,17 @@ struct ApplyMsg{
 
     // For 3D:
     bool SnapshotValid;
-    uint8_t Snapshot;
+    string Snapshot;
     int SnapshotTerm;
     int SnapshotIndex;
 };
 
 class LogEntry{
 public:
-    LogEntry(string cmd = "", int term = -1):m_command(cmd),m_term(term){}
+    LogEntry(string cmd = "", int term = -1,int index = -1):m_command(cmd),m_term(term),m_index(index){}
     string m_command;
     int m_term;
+    int m_index;
 };
 
 enum RafterType{
