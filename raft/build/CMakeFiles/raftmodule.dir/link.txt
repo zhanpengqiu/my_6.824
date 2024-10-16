@@ -1,2 +1,0 @@
-/usr/bin/ar qc libraftmodule.a CMakeFiles/raftmodule.dir/raftrpc.pb.cc.o CMakeFiles/raftmodule.dir/raftrpc.grpc.pb.cc.o CMakeFiles/raftmodule.dir/raft.cpp.o
-/usr/bin/ranlib libraftmodule.a
